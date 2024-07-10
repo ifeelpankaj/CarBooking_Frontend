@@ -1,0 +1,422 @@
+// // Variables
+// $primary-color: #e67e22;
+// $secondary-color: #34495e;
+// $background-color: #f9f9f9;
+// $text-color: #333;
+// $light-text-color: #666;
+// $border-radius: 8px;
+// $box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+// $transition: all 0.3s ease;
+
+// // Mixins
+// @mixin card {
+//   background-color: #fff;
+//   border-radius: $border-radius;
+//   box-shadow: $box-shadow;
+//   transition: $transition;
+// }
+
+// @mixin section-heading {
+//   font-size: 1.5em;
+//   margin-bottom: 15px;
+//   color: $secondary-color;
+//   border-bottom: 2px solid rgba($secondary-color, 0.1);
+//   padding-bottom: 10px;
+// }
+
+// .booking-review-main {
+//   display: flex;
+//   flex-direction: column;
+//   max-width: 1200px;
+//   margin: 0 auto;
+//   padding: 30px 20px;
+//   font-family: 'Arial, sans-serif';
+//   color: $text-color;
+//   background-color: $background-color;
+
+//   .booking-summary {
+//     @include card;
+//     padding: 25px;
+//     margin-bottom: 30px;
+//     background: linear-gradient(135deg, $primary-color, darken($primary-color, 10%));
+//     color: #fff;
+
+//     .booking-heading {
+//       font-size: 2em;
+//       margin-bottom: 15px;
+//       font-weight: 600;
+//     }
+
+//     .booking-info {
+//       font-size: 1.2em;
+//       opacity: 0.9;
+//     }
+//   }
+
+//   .details-container {
+//     display: flex;
+//     gap: 30px;
+
+//     .cab-details, .payment-details {
+//       @include card;
+//       padding: 30px;
+//     }
+
+//     .cab-details {
+//       flex: 2;
+
+//       .cab-image-container, .driver-info, .tour-inclusions, .pickup-info, .cancellation-policy, .additional-info {
+//         margin-bottom: 30px;
+
+//         .section-heading {
+//           @include section-heading;
+//         }
+
+//         .section-content {
+//           font-size: 1.05em;
+//           color: $light-text-color;
+//           line-height: 1.6;
+//         }
+
+//         .cab-model-name {
+//           font-size: 1.3em;
+//           margin-bottom: 15px;
+//           color: $primary-color;
+//           font-weight: 600;
+//         }
+
+//         .info-list {
+//           list-style-type: none;
+//           margin-left: 0;
+//           padding-left: 0;
+
+//           li {
+//             position: relative;
+//             padding-left: 20px;
+//             margin-bottom: 10px;
+
+//             &:before {
+//               content: '•';
+//               position: absolute;
+//               left: 0;
+//               color: $primary-color;
+//             }
+//           }
+//         }
+
+//         .pickup-input {
+//           width: 100%;
+//           padding: 12px;
+//           border: 1px solid rgba($secondary-color, 0.2);
+//           border-radius: $border-radius;
+//           font-size: 1em;
+//           transition: $transition;
+
+//           &:focus {
+//             outline: none;
+//             border-color: $primary-color;
+//             box-shadow: 0 0 0 2px rgba($primary-color, 0.1);
+//           }
+//         }
+//       }
+//     }
+
+//     .payment-details {
+//       flex: 1;
+//       display: flex;
+//       flex-direction: column;
+//       justify-content: flex-start;
+//       padding: 25px;
+
+//       .total-amount {
+//         margin-bottom: 20px;
+//         display: flex;
+//         align-items: center;
+//         flex-direction: column;
+//         justify-content: space-between;
+
+//         .amount-label {
+//           font-size: 1.2em;
+//           color: $secondary-color;
+//           font-weight: 600;
+//         }
+
+//         .amount-value {
+//           font-size: 1.8em;
+//           color: $primary-color;
+//           font-weight: 700;
+//         }
+//       }
+
+//       .payment-options {
+//         margin-bottom: 20px;
+
+//         .payment-option {
+//           display: flex;
+//           align-items: center;
+//           margin-bottom: 10px;
+
+//           input[type="radio"] {
+//             margin-right: 10px;
+//           }
+
+//           label {
+//             font-size: 1em;
+//             color: $text-color;
+//           }
+//         }
+//       }
+
+//       .payment-button {
+//         background-color: $primary-color;
+//         color: #fff;
+//         border: none;
+//         padding: 12px;
+//         border-radius: $border-radius;
+//         font-size: 1.1em;
+//         font-weight: 600;
+//         cursor: pointer;
+//         transition: $transition;
+
+//         &:hover {
+//           background-color: darken($primary-color, 10%);
+//         }
+//       }
+
+//       .contact-info {
+//         margin-top: 20px;
+//         font-size: 0.9em;
+//         color: $light-text-color;
+//         background-color: rgba($secondary-color, 0.05);
+//         padding: 12px;
+//         border-radius: $border-radius;
+//         text-align: center;
+//         border: 1px solid rgba($secondary-color, 0.1);
+//       }
+//     }
+//   }
+// }
+
+// // Media queries for responsiveness
+// @media (max-width: 768px) {
+//   .booking-review-main {
+//     .details-container {
+//       flex-direction: column;
+
+//       .cab-details, .payment-details {
+//         width: 100%;
+//       }
+//     }
+//   }
+// }
+// Variables
+$primary-color: #e67e22;
+$secondary-color: #34495e;
+$background-color: #f9f9f9;
+$text-color: #333;
+$light-text-color: #666;
+$border-radius: 8px;
+$box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+$transition: all 0.3s ease;
+
+// Mixins
+@mixin card {
+  background-color: #fff;
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
+  transition: $transition;
+}
+
+@mixin section-heading {
+  font-size: 1.5em;
+  margin-bottom: 15px;
+  color: $secondary-color;
+  border-bottom: 2px solid rgba($secondary-color, 0.1);
+  padding-bottom: 10px;
+}
+
+.booking-review-main {
+  display: flex;
+  flex-direction: column;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 30px 20px;
+  font-family: 'Arial, sans-serif';
+  color: $text-color;
+  background-color: $background-color;
+
+  .booking-summary {
+    @include card;
+    padding: 25px;
+    margin-bottom: 30px;
+    background: linear-gradient(135deg, $primary-color, darken($primary-color, 10%));
+    color: #fff;
+
+    .booking-heading {
+      font-size: 2em;
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+
+    .booking-info {
+      font-size: 1.2em;
+      opacity: 0.9;
+    }
+  }
+
+  .details-container {
+    display: flex;
+    gap: 30px;
+
+    .cab-details, .payment-details {
+      @include card;
+      padding: 30px;
+    }
+
+    .cab-details {
+      flex: 2;
+
+      .cab-image-container, .driver-info, .tour-inclusions, .pickup-info, .cancellation-policy, .additional-info {
+        margin-bottom: 30px;
+
+        .section-heading {
+          @include section-heading;
+        }
+
+        .section-content {
+          font-size: 1.05em;
+          color: $light-text-color;
+          line-height: 1.6;
+        }
+
+        .cab-model-name {
+          font-size: 1.3em;
+          margin-bottom: 15px;
+          color: $primary-color;
+          font-weight: 600;
+        }
+
+        .info-list {
+          list-style-type: none;
+          margin-left: 0;
+          padding-left: 0;
+
+          li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 10px;
+
+            &:before {
+              content: '•';
+              position: absolute;
+              left: 0;
+              color: $primary-color;
+            }
+          }
+        }
+
+        .pickup-input {
+          width: 100%;
+          padding: 12px;
+          border: 1px solid rgba($secondary-color, 0.2);
+          border-radius: $border-radius;
+          font-size: 1em;
+          transition: $transition;
+
+          &:focus {
+            outline: none;
+            border-color: $primary-color;
+            box-shadow: 0 0 0 2px rgba($primary-color, 0.1);
+          }
+        }
+      }
+    }
+
+    .payment-details {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      padding: 25px;
+
+      .total-amount {
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: space-between;
+
+        .amount-label {
+          font-size: 1.2em;
+          color: $secondary-color;
+          font-weight: 600;
+        }
+
+        .amount-value {
+          font-size: 1.8em;
+          color: $primary-color;
+          font-weight: 700;
+        }
+      }
+
+      .payment-options {
+        margin-bottom: 20px;
+
+        .payment-option {
+          display: flex;
+          align-items: center;
+          margin-bottom: 10px;
+
+          input[type="radio"] {
+            margin-right: 10px;
+          }
+
+          label {
+            font-size: 1em;
+            color: $text-color;
+          }
+        }
+      }
+
+      .payment-button {
+        background-color: $primary-color;
+        color: #fff;
+        border: none;
+        padding: 12px;
+        border-radius: $border-radius;
+        font-size: 1.1em;
+        font-weight: 600;
+        cursor: pointer;
+        transition: $transition;
+
+        &:hover {
+          background-color: darken($primary-color, 10%);
+        }
+      }
+
+      .contact-info {
+        margin-top: 20px;
+        font-size: 0.9em;
+        color: $light-text-color;
+        background-color: rgba($secondary-color, 0.05);
+        padding: 12px;
+        border-radius: $border-radius;
+        text-align: center;
+        border: 1px solid rgba($secondary-color, 0.1);
+      }
+    }
+  }
+}
+
+// Media queries for responsiveness
+@media (max-width: 768px) {
+  .booking-review-main {
+    .details-container {
+      flex-direction: column;
+
+      .cab-details, .payment-details {
+        width: 100%;
+      }
+    }
+  }
+}

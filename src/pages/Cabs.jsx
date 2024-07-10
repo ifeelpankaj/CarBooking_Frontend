@@ -1,48 +1,50 @@
-import { Button, Card, CardBody, CardFooter, Heading, Image, Stack } from '@chakra-ui/react'
-import React, { Fragment } from 'react'
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useShowCabsQuery } from '../redux/api/cabApi';
+import CabCard from '../cards/cabCard';
+import { updateFormField } from '../redux/reducer/bookingSlice';
+
 
 const Cabs = () => {
+    const dispatch = useDispatch();
+    const formData = useSelector((state) => state.cabBooking);
+    const distance = 1236;
+    const { data: cabs, isLoading } = useShowCabsQuery();
+
+    useEffect(() => {
+        dispatch(updateFormField({ field: 'distance', value: distance }));
+    }, [dispatch, distance]);
+    
     return (
-        <Fragment>
-            <div>Cabs</div>
-            <p>Search Result...</p>
-            <div>
-                <Card
-                    direction={{ base: 'column', sm: 'row' }}
-                    overflow='hidden'
-                    variant='outline'
-                >
-                    <Image
-                        objectFit='cover'
-                        maxW={{ base: '100%', sm: '200px' }}
-                        src='https://images.91wheels.com/assets/c_images/gallery/maruti/dzire/maruti-dzire-0-1698069091.jpg?w=1200&q=60?w=3840&q=60'
-                        alt='Car'
-                    />
+        <main className='cab-page'>
+            {isLoading ? (
+                <p>Loading...</p>
+            ) : (
+                <div>
+                    <ul>
+                        {cabs.map((cab) => (
+                            <li key={cab._id}>
+                                <CabCard
+                                    availability="Available"
+                                    belongsTo="User"
+                                    email="kholiya407@gmail.com"
+                                    _id={cab._id}
+                                    capacity={cab.capacity}
+                                    createdAt={cab.createdAt}
+                                    feature={cab.feature}
+                                    isReady={cab.isReady}
+                                    modelName={cab.modelName}
+                                    photos={cab.photos}
+                                    price={(cab.rate) * distance}
+                                    type={cab.type}
+                                />
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            )}
+        </main>
+    );
+};
 
-                    <Stack>
-                        <CardBody>
-                            <Heading size='md'>Desire</Heading>
-                            <p>4 Seater</p>
-                            <p>AC</p>
-                            <p>Owner:Pankaj</p>
-
-
-                            
-
-                            
-                        </CardBody>
-
-                        <CardFooter>
-                            <Button variant='solid' colorScheme='blue'>
-                                Buy Latte
-                            </Button>
-                        </CardFooter>
-                    </Stack>
-                </Card>
-            </div>
-        </Fragment>
-
-    )
-}
-
-export default Cabs
+export default Cabs;

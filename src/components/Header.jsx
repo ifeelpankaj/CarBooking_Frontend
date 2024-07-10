@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLazyLogoutQuery } from '../redux/api/userApi';
 import { userNotExist } from '../redux/reducer/userReducer';
 import toast from 'react-hot-toast';
+import { resetForm } from '../redux/reducer/bookingSlice';
 
 const Header = () => {
     const {  user } = useSelector(
@@ -27,6 +28,7 @@ const Header = () => {
     const onLogout = async () => {
         try {
           // Execute the logout query
+          dispatch(resetForm());
           const result = await logout();
       
           if (result.data.success === true ) { 
@@ -53,7 +55,7 @@ const Header = () => {
 
                 <nav className="header__nav">
                     <Link to="/" className="header__nav-link">Home</Link>
-                    <Link to="/fleet" className="header__nav-link">Our Fleet</Link>
+                    <Link to="/fleet" className="header__nav-link">Our Team</Link>
                     <Link to="/services" className="header__nav-link">Services</Link>
                     <Link to="/contact" className="header__nav-link">Contact</Link>
                 </nav>
