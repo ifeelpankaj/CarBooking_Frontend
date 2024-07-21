@@ -1,11 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const server  = import.meta.env.VITE_SERVER
+const server = import.meta.env.VITE_SERVER
 export const userAPI = createApi({
   reducerPath: "userApi",
   baseQuery: fetchBaseQuery({
     baseUrl: `${server}/api/v1/user/`,
-    credentials:'include',
+    credentials: 'include',
   }),
   tagTypes: ["users"],
   endpoints: (builder) => ({
@@ -27,27 +27,39 @@ export const userAPI = createApi({
     }),
     verify: builder.mutation({
       query: (verificationData) => ({
-        url: 'verify', 
+        url: 'verify',
         method: 'POST',
         body: verificationData,
       }),
-      invalidatesTags: ['users'], 
+      invalidatesTags: ['users'],
     }),
     me: builder.query({
       query: () => ({
-        url: 'me', 
+        url: 'me',
         method: 'GET',
       }),
-      providesTags: ['users'], 
+      providesTags: ['users'],
+    }),
+    meId: builder.query({
+      query: (id) => `userById/${id}`,
+      providesTags: ['users'],
+    }),
+    update: builder.mutation({
+      query: (newData) => ({
+        url: 'modify',
+        method: 'PUT',
+        body: newData,
+      }),
+      invalidatesTags: ['users'],
     }),
     logout: builder.query({
       query: () => ({
-        url: 'logout', 
+        url: 'logout',
         method: 'GET',
       }),
-      providesTags: ['users'], 
+      providesTags: ['users'],
     }),
   }),
 });
 
-export const { useLoginMutation,useRegisterMutation,useVerifyMutation,useMeQuery,useLazyLogoutQuery } = userAPI;
+export const { useLoginMutation, useRegisterMutation, useVerifyMutation, useMeQuery, useLazyLogoutQuery, useUpdateMutation, useMeIdQuery } = userAPI;

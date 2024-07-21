@@ -1,0 +1,88 @@
+.my-ride {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    font-family: 'Arial', sans-serif;
+  
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 2rem;
+    }
+  
+    .cab-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+  
+    .cab-card {
+      background-color: #f8f9fa;
+      border-radius: 15px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      transition: transform 0.3s ease;
+  
+      &:hover {
+        transform: translateY(-5px);
+      }
+  
+      .cab-images {
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+  
+        img {
+          flex: 0 0 auto;
+          width: 100%;
+          height: 200px;
+          object-fit: cover;
+          scroll-snap-align: start;
+        }
+      }
+  
+      .cab-info {
+        padding: 1.5rem;
+  
+        h2 {
+          color: #007bff;
+          margin-bottom: 1rem;
+        }
+  
+        p {
+          margin-bottom: 0.5rem;
+          color: #555;
+  
+          span {
+            font-weight: bold;
+            color: #333;
+          }
+        }
+      }
+    }
+  }
+  
+  .loading {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #007bff;
+    margin-top: 2rem;
+  }
+  
+  .no-cabs {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #555;
+    margin-top: 2rem;
+  }
+  
+  @media (max-width: 600px) {
+    .my-ride {
+      padding: 1rem;
+    }
+  
+    .cab-list {
+      grid-template-columns: 1fr;
+    }
+  }

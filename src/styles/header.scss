@@ -1,490 +1,142 @@
-
-
-
-// @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
-
-// // Variables
-// $primary-bg: #242526;
-// $secondary-bg: #3A3B3C;
-// $text-color: #f2f2f2;
-// $secondary-text-color: #d9d9d9;
-// $transition-time: 0.3s;
-
-// // Mixins
-// @mixin flex-between {
-//   display: flex;
-//   align-items: center;
-//   justify-content: space-between;
-// }
-
-// * {
-//   margin: 0;
-//   padding: 0;
-//   box-sizing: border-box;
-//   font-family: 'Poppins', sans-serif;
-// }
-
-// .header {
-//   position: relative;
-//   z-index: 99;
-//   width: 100%;
-//   background: $primary-bg;
-
-//   &__container {
-//     @include flex-between;
-//     max-width: 1300px;
-//     padding: 0 30px;
-//     height: 70px;
-//     margin: auto;
-//   }
-
-//   &__logo {
-//     color: $text-color;
-//     font-size: 30px;
-//     font-weight: 600;
-//     text-decoration: none;
-
-//     &-icon {
-//       margin-right: 10px;
-//     }
-//   }
-
-//   &__nav {
-//     display: inline-flex;
-
-//     &-link {
-//       color: $text-color;
-//       text-decoration: none;
-//       font-size: 18px;
-//       font-weight: 500;
-//       padding: 9px 15px;
-//       border-radius: 5px;
-//       transition: all $transition-time ease;
-
-//       &:hover {
-//         background: $secondary-bg;
-//       }
-//     }
-//   }
-
-//   &__user {
-//     &-toggle {
-//       color: $text-color;
-//       background: none;
-//       border: none;
-//       font-size: 18px;
-//       cursor: pointer;
-//       display: flex;
-//       align-items: center;
-
-//       span {
-//         margin-left: 5px;
-//       }
-//     }
-
-//     &-menu {
-//       position: absolute;
-//       background: $primary-bg;
-//       top: 70px;
-//       right: 30px;
-//       width: 180px;
-//       opacity: 0;
-//       visibility: hidden;
-//       transition: all $transition-time ease;
-//       box-shadow: 0 6px 10px rgba(0,0,0,0.15);
-
-//       &--open {
-//         opacity: 1;
-//         visibility: visible;
-//       }
-//     }
-
-//     &-link {
-//       display: block;
-//       padding: 10px 15px;
-//       color: $text-color;
-//       text-decoration: none;
-//       transition: background $transition-time ease;
-
-//       &:hover {
-//         background: $secondary-bg;
-//       }
-//     }
-//   }
-
-//   &__auth-button {
-//     color: $text-color;
-//     text-decoration: none;
-//     font-size: 18px;
-//     font-weight: 500;
-//     padding: 9px 15px;
-//     border-radius: 5px;
-//     background: $secondary-bg;
-//     transition: all $transition-time ease;
-
-//     &:hover {
-//       background: lighten($secondary-bg, 10%);
-//     }
-//   }
-
-//   &__mobile-menu-toggle {
-//     display: none;
-//     color: $text-color;
-//     font-size: 24px;
-//     background: none;
-//     border: none;
-//     cursor: pointer;
-//   }
-
-//   &__mobile-menu {
-//     display: none;
-//     position: fixed;
-//     top: 0;
-//     left: -100%;
-//     height: 100vh;
-//     width: 100%;
-//     max-width: 350px;
-//     background: $primary-bg;
-//     padding: 50px 10px;
-//     overflow-y: auto;
-//     transition: all $transition-time ease;
-
-//     &--open {
-//       left: 0;
-//     }
-
-//     &-close {
-//       position: absolute;
-//       top: 10px;
-//       right: 30px;
-//       color: $text-color;
-//       font-size: 24px;
-//       background: none;
-//       border: none;
-//       cursor: pointer;
-//     }
-
-//     &-title {
-//       color: $text-color;
-//       font-size: 24px;
-//       font-weight: 600;
-//       margin-bottom: 20px;
-//       text-align: center;
-//     }
-
-//     .header__nav-link {
-//       display: block;
-//       padding: 15px 20px;
-//       font-size: 20px;
-//     }
-//   }
-// }
-
-// @media screen and (max-width: 970px) {
-//   .header {
-//     &__nav {
-//       display: none;
-//     }
-
-//     &__user {
-//       display: none;
-//     }
-
-//     &__auth-button {
-//       display: none;
-//     }
-
-//     &__mobile-menu-toggle {
-//       display: block;
-//     }
-
-//     &__mobile-menu {
-//       display: block;
-//     }
-//   }
-// }
-
-// // Custom scrollbar
-// ::-webkit-scrollbar {
-//   width: 10px;
-// }
-
-// ::-webkit-scrollbar-track {
-//   background: $primary-bg;
-// }
-
-// ::-webkit-scrollbar-thumb {
-//   background: $secondary-bg;
-// }
-
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
-
-// Color variables
-$color1: white;
-$color2: rgb(46, 46, 46);
-$color3: rgb(0, 104, 136);
-$black: #202A25;
-$purple: #5F4BB6;
-$blue: #86A5D9;
-$cyan: #26F0F1;
-$green: #C4EBC8;
-
-// Semantic color variables
-$primary-bg: $black;
-$secondary-bg: $purple;
-$text-color: $color1;
-$accent-color: $cyan;
-
-$transition-time: 0.3s;
-
-@mixin flex-between {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
-}
+@import 'variables';
 
 .header {
-  position: relative;
-  z-index: 99;
-  width: 100%;
-  background: $primary-bg;
+  background: linear-gradient(135deg, $purple, $blue);
+  padding: 1rem 0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
   &__container {
-    @include flex-between;
-    max-width: 1300px;
-    padding: 0 30px;
-    height: 70px;
-    margin: auto;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 2rem;
   }
 
   &__logo {
-    color: $text-color;
-    font-size: 30px;
-    font-weight: 600;
-    text-decoration: none;
+      display: flex;
+      align-items: center;
+      color: $color1;
+      font-size: 1.5rem;
+      font-weight: bold;
 
-    &-icon {
-      margin-right: 10px;
-      color: $accent-color;
-    }
+      &-icon {
+          font-size: 2rem;
+          margin-right: 0.5rem;
+      }
+
+      &-text {
+          background: linear-gradient(45deg, $cyan, $green);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+      }
   }
 
   &__nav {
-    display: inline-flex;
+      display: flex;
+      gap: 1.5rem;
 
-    &-link {
-      color: $text-color;
-      text-decoration: none;
-      font-size: 18px;
-      font-weight: 500;
-      padding: 9px 15px;
-      margin: 0 5px;
-      border-radius: 5px;
-      transition: all $transition-time ease;
-      position: relative;
+      &-link {
+          color: $color1;
+          font-weight: 500;
+          position: relative;
+          padding: 0.5rem 0;
 
-      &::before,
-      &::after {
-        content: '';
-        position: absolute;
-        width: 0;
-        height: 2px;
-        background-color: $accent-color;
-        transition: all 0.3s ease;
-        opacity: 0;
+          &::after {
+              content: '';
+              position: absolute;
+              bottom: 0;
+              left: 0;
+              width: 0;
+              height: 2px;
+              background-color: $cyan;
+              transition: width 0.3s ease;
+          }
+
+          &:hover::after {
+              width: 100%;
+          }
       }
-
-      &::before {
-        left: 0;
-        top: 0;
-      }
-
-      &::after {
-        right: 0;
-        bottom: 0;
-      }
-
-      &:hover {
-        color: $accent-color;
-
-        &::before,
-        &::after {
-          width: 100%;
-          opacity: 1;
-        }
-      }
-    }
   }
 
   &__user {
-    &-toggle {
-      color: $text-color;
-      background: none;
-      border: none;
-      font-size: 18px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
+      position: relative;
 
-      span {
-        margin-left: 5px;
+      &-menu {
+          display: flex;
+          align-items: center;
+          cursor: pointer;
       }
-    }
 
-    &-menu {
-      position: absolute;
-      background: $primary-bg;
-      top: 70px;
-      right: 30px;
-      width: 180px;
-      opacity: 0;
-      visibility: hidden;
-      transition: all $transition-time ease;
-      box-shadow: 0 6px 10px rgba(0,0,0,0.15);
-
-      &--open {
-        opacity: 1;
-        visibility: visible;
+      &-toggle {
+          background: none;
+          border: none;
+          color: $color1;
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          font-size: 1rem;
+          cursor: pointer;
       }
-    }
 
-    &-link {
-      display: block;
-      padding: 10px 15px;
-      color: $text-color;
-      text-decoration: none;
-      transition: background $transition-time ease;
-
-      &:hover {
-        background: $secondary-bg;
-        color: $accent-color;
+      &-dropdown {
+          position: absolute;
+          top: 100%;
+          right: 0;
+          background-color: $color1;
+          border-radius: 8px;
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+          padding: 1rem;
+          min-width: 200px;
+          z-index: 1000;
       }
-    }
+
+      &-link {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          color: $color2;
+          padding: 0.5rem;
+          transition: background-color 0.3s ease;
+
+          &:hover {
+              background-color: rgba($purple, 0.1);
+          }
+      }
   }
 
   &__auth-button {
-    color: $text-color;
-    text-decoration: none;
-    font-size: 18px;
-    font-weight: 500;
-    padding: 9px 15px;
-    border-radius: 5px;
-    background: $secondary-bg;
-    transition: all $transition-time ease;
-
-    &:hover {
-      background: $accent-color;
-      color: $primary-bg;
-    }
-  }
-
-  &__mobile-menu-toggle {
-    display: none;
-    color: $text-color;
-    font-size: 24px;
-    background: none;
-    border: none;
-    cursor: pointer;
-  }
-
-  &__mobile-menu {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: -100%;
-    height: 100vh;
-    width: 100%;
-    max-width: 350px;
-    background: $primary-bg;
-    padding: 50px 10px;
-    overflow-y: auto;
-    transition: all $transition-time ease;
-
-    &--open {
-      left: 0;
-    }
-
-    &-close {
-      position: absolute;
-      top: 10px;
-      right: 30px;
-      color: $text-color;
-      font-size: 24px;
-      background: none;
-      border: none;
-      cursor: pointer;
-    }
-
-    &-title {
-      color: $accent-color;
-      font-size: 24px;
-      font-weight: 600;
-      margin-bottom: 20px;
-      text-align: center;
-    }
-
-    .header__nav-link {
-      display: block;
-      padding: 15px 20px;
-      font-size: 20px;
-      border-bottom: 1px solid rgba($text-color, 0.1);
-
-      &:last-child {
-        border-bottom: none;
-      }
-
-      &::before,
-      &::after {
-        display: none;
-      }
+      background-color: $cyan;
+      color: $black;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
 
       &:hover {
-        background: $secondary-bg;
+          background-color: darken($cyan, 10%);
       }
-    }
   }
 }
 
-@media screen and (max-width: 970px) {
+@media (max-width: 768px) {
   .header {
-    &__nav {
-      display: none;
-    }
+      &__nav {
+          display: none;
+      }
 
-    &__user {
-      display: none;
-    }
+      &__user {
+          &-menu {
+              flex-direction: column;
+              align-items: flex-end;
+          }
 
-    &__auth-button {
-      display: none;
-    }
-
-    &__mobile-menu-toggle {
-      display: block;
-    }
-
-    &__mobile-menu {
-      display: block;
-    }
+          &-dropdown {
+              position: static;
+              width: 100%;
+              margin-top: 1rem;
+          }
+      }
   }
-}
-
-// Custom scrollbar
-::-webkit-scrollbar {
-  width: 10px;
-}
-
-::-webkit-scrollbar-track {
-  background: $primary-bg;
-}
-
-::-webkit-scrollbar-thumb {
-  background: $secondary-bg;
-}
+} 

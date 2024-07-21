@@ -14,37 +14,49 @@ const Cabs = () => {
     useEffect(() => {
         dispatch(updateFormField({ field: 'distance', value: distance }));
     }, [dispatch, distance]);
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  return (
+    <main 
+      className='cab-page'
+    >
+      {isLoading ? (
+        <p>
+          Loading...
+        </p>
+      ) : (
+        <div className="cab-list">
+          {cabs && cabs.map((cab) => (
+            <div
+              key={cab._id}
+              variants={containerVariants}
+            >
+              <CabCard
+                availability="Available"
+                _id={cab._id}
+                capacity={cab.capacity}
+                feature={cab.feature}
+                modelName={cab.modelName}
+                photos={cab.photos}
+                price={(cab.rate) * distance}
+                type={cab.type}
+              />
+            </div>
+          ))}
+        </div>
+       )} 
+    </main>
     
-    return (
-        <main className='cab-page'>
-            {isLoading ? (
-                <p>Loading...</p>
-            ) : (
-                <div>
-                    <ul>
-                        {cabs.map((cab) => (
-                            <li key={cab._id}>
-                                <CabCard
-                                    availability="Available"
-                                    belongsTo="User"
-                                    email="kholiya407@gmail.com"
-                                    _id={cab._id}
-                                    capacity={cab.capacity}
-                                    createdAt={cab.createdAt}
-                                    feature={cab.feature}
-                                    isReady={cab.isReady}
-                                    modelName={cab.modelName}
-                                    photos={cab.photos}
-                                    price={(cab.rate) * distance}
-                                    type={cab.type}
-                                />
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            )}
-        </main>
-    );
+  );
 };
 
 export default Cabs;

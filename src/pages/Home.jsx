@@ -1,21 +1,17 @@
-import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
-import React, { Fragment, useRef, useState } from 'react'
+import React, { Fragment, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FaCar, FaMapMarkerAlt, FaCalendarAlt, FaClock } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { updateFormField } from '../redux/reducer/bookingSlice';
 import { useDispatch, useSelector } from 'react-redux';
-
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
 
 const Home = () => {
   const dispatch = useDispatch();
   const formData = useSelector((state) => state.cabBooking);
   const navigate = useNavigate();
   const [tripType, setTripType] = useState('OneWay');
-
-  const dateInputRefOneWay = useRef(null);
-  const timeInputRefOneWay = useRef(null);
-  const dateInputRefRoundTrip = useRef(null);
-  const timeInputRefRoundTrip = useRef(null);
-  const dropOffDateInputRef = useRef(null);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -26,179 +22,135 @@ const Home = () => {
     dispatch(updateFormField({ field, value: event.target.value }));
   };
 
-  const handleTabChange = (index) => {
-    const newTripType = index === 0 ? 'OneWay' : 'RoundTrip';
-    setTripType(newTripType);
-    dispatch(updateFormField({ field: 'cabType', value: newTripType }));
+  const handleDateChange = (field) => (date) => {
+    const dateString = date ? date.toISOString() : null;
+    dispatch(updateFormField({ field, value: dateString }));
   };
-  const openDatePicker = (ref) => {
-    if (ref.current) {
-      ref.current.type = 'date';
-      ref.current.focus();
-      ref.current.click();
+
+  const toggleTripType = () => {
+    setTripType(tripType === 'OneWay' ? 'RoundTrip' : 'OneWay');
+    dispatch(updateFormField({ field: 'cabType', value: tripType === 'OneWay' ? 'RoundTrip' : 'OneWay' }));
+  };
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        duration: 0.5,
+        when: "beforeChildren",
+        staggerChildren: 0.1
+      }
     }
   };
-  const openTimePicker = (ref) => {
-    if (ref.current) {
-      ref.current.type = 'time';
-      ref.current.focus();
-      ref.current.click();
-    }
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: { y: 0, opacity: 1 }
   };
 
   return (
     <Fragment>
-      <main className='homeContainer'>
-        <div className='backgroundImage'></div>
+      <motion.main
+        className='homeContainer'
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
         <div className='content'>
-          <div className='formContainer'>
-            <h1 className='title'>Book Online Cab</h1>
-            <Tabs isFitted onChange={handleTabChange} variant='soft-rounded' colorScheme='yellow'>
-              <TabList mb="1em">
-                <Tab>One Way Trip</Tab>
-                <Tab>Round Trip</Tab>
-              </TabList>
-              <TabPanels>
-                <TabPanel>
-                  <form onSubmit={handleSubmit}>
-                    {/* One Way Trip form content */}
-                    <div className="form-group">
-                      <input
-                        type="text"
-                        id="from"
-                        placeholder="Pick-up Location"
-                        value={formData.from}
-                        onChange={handleInputChange('from')}
-                        required
-                      />
-                    </div>
-                    <div className="form-group">
-                      <input
-                        type="text"
-                        id="to"
-                        placeholder="Drop-off Location"
-                        value={formData.to}
-                        onChange={handleInputChange('to')}
-                        required
-
-                      />
-                    </div>
-                    <div className="form-group">
-                      <input
-                        ref={dateInputRefOneWay}
-                        type="text"
-                        id="pickupDate"
-                        placeholder="Pick-Up Date"
-                        value={formData.pickupDate}
-                        onChange={handleInputChange('pickupDate')}
-                        onClick={() => openDatePicker(dateInputRefOneWay)}
-                        onBlur={() => { if (dateInputRefOneWay.current) dateInputRefOneWay.current.type = 'text'; }}
-                        required
-
-                      />
-                    </div>
-                    <div className="form-group">
-                      <input
-                        ref={timeInputRefOneWay}
-                        type="text"
-                        id="pickupTime"
-                        placeholder="Pick-Up Time"
-                        value={formData.pickupTime}
-                        onChange={handleInputChange('pickupTime')}
-                        onClick={() => openTimePicker(timeInputRefOneWay)}
-                        onBlur={() => { if (timeInputRefOneWay.current) timeInputRefOneWay.current.type = 'text'; }}
-                        required
-
-                      />
-                    </div>
-                    <button type="submit">Search Cabs</button>
-                  </form>
-                </TabPanel>
-                <TabPanel>
-                  <form onSubmit={handleSubmit}>
-                    {/* Round Trip form content */}
-                    <div className="form-group">
-                      <input
-                        type="text"
-                        id="from"
-                        placeholder="Pick-up Location"
-                        value={formData.from}
-                        onChange={handleInputChange('from')}
-                        required
-                        
-                      />
-                    </div>
-                    <div className="form-group">
-                      <input
-                        type="text"
-                        id="to"
-                        placeholder="Drop-off Location"
-                        value={formData.to}
-                        onChange={handleInputChange('to')}
-                        required
-
-                      />
-                    </div>
-                    <div className="form-group">
-                      <input
-                        ref={dateInputRefRoundTrip}
-                        type="text"
-                        id="pickupDate"
-                        placeholder="Pick-Up Date"
-                        value={formData.pickupDate}
-                        onChange={handleInputChange('pickupDate')}
-                        onClick={() => openDatePicker(dateInputRefRoundTrip)}
-                        onBlur={() => { if (dateInputRefRoundTrip.current) dateInputRefRoundTrip.current.type = 'text'; }}
-                        required
-
-                      />
-                    </div>
-                    <div className="form-group">
-                      <input
-                        ref={timeInputRefRoundTrip}
-                        type="text"
-                        id="pickupTime"
-                        placeholder="Pick-Up Time"
-                        value={formData.pickupTime}
-                        onChange={handleInputChange('pickupTime')}
-                        onClick={() => openTimePicker(timeInputRefRoundTrip)}
-                        onBlur={() => { if (timeInputRefRoundTrip.current) timeInputRefRoundTrip.current.type = 'text'; }}
-                        required
-
-                      />
-                    </div>
-                    <div className="form-group">
-                      <input
-                        ref={dropOffDateInputRef}
-                        type="text"
-                        id="dropOffDate"
-                        placeholder="Drop-Off Date"
-                        value={formData.dropOffDate}
-                        onChange={handleInputChange('dropOffDate')}
-                        onClick={() => openDatePicker(dropOffDateInputRef)}
-                        onBlur={() => { if (dropOffDateInputRef.current) dropOffDateInputRef.current.type = 'text'; }}
-                        required
-
-                      />
-                    </div>
-                    <button type="submit">Search Cabs</button>
-                  </form>
-                </TabPanel>
-              </TabPanels>
-            </Tabs>
-          </div>
-          <div className='textContainer'>
-            <h2>BOOK A TOUR TODAY!</h2>
-            <p>PLAN YOUR TOUR WITH US AND GET THE LOWEST PRICE FROM US.</p>
-            <p>GET 15% DISCOUNT FOR RETURNING CUSTOMER.</p>
-
-          </div>
+          <motion.div
+            className='formContainer'
+            variants={itemVariants}
+          >
+            <motion.h1 className='title' variants={itemVariants}>
+              <FaCar /> VelocityRide
+            </motion.h1>
+            <motion.div className="trip-toggle" onClick={toggleTripType}>
+              <motion.div
+                className="toggle-slider"
+                animate={{ x: tripType === 'OneWay' ? 0 : '100%' }}
+              />
+              <span className={tripType === 'OneWay' ? 'active' : ''}>One Way</span>
+              <span className={tripType === 'RoundTrip' ? 'active' : ''}>Round Trip</span>
+            </motion.div>
+            <form onSubmit={handleSubmit}>
+              <motion.div className="form-group" variants={itemVariants}>
+                <FaMapMarkerAlt className="input-icon" />
+                <input
+                  type="text"
+                  placeholder="Pick-up Location"
+                  value={formData.from}
+                  onChange={handleInputChange('from')}
+                  required
+                />
+              </motion.div>
+              <motion.div className="form-group" variants={itemVariants}>
+                <FaMapMarkerAlt className="input-icon" />
+                <input
+                  type="text"
+                  placeholder="Drop-off Location"
+                  value={formData.to}
+                  onChange={handleInputChange('to')}
+                  required
+                />
+              </motion.div>
+              <motion.div className="form-group" variants={itemVariants}>
+                <FaCalendarAlt className="input-icon" />
+                <DatePicker
+                  selected={formData.pickupDate}
+                  onChange={handleDateChange('pickupDate')}
+                  dateFormat="MMMM d, yyyy"
+                  placeholderText="Pick-Up Date"
+                  required
+                  className="custom-datepicker"
+                  calendarClassName="custom-calendar"
+                  popperClassName="custom-popper"
+                  wrapperClassName="custom-wrapper"
+                  showPopperArrow={false}
+                />
+              </motion.div>
+              {tripType === 'RoundTrip' && (
+                <AnimatePresence>
+                  <motion.div
+                    className="form-group"
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    exit={{ opacity: 0, height: 0 }}
+                  >
+                    <FaCalendarAlt className="input-icon" />
+                    <DatePicker
+                      selected={formData.dropOffDate}
+                      onChange={handleDateChange('dropOffDate')}
+                      dateFormat="MMMM d, yyyy"
+                      placeholderText="Drop-Off Date"
+                      required
+                    />
+                  </motion.div>
+                </AnimatePresence>
+              )}
+              <motion.button
+                type="submit"
+                variants={itemVariants}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className='SearchCab-button'
+              >
+                Search Cabs
+              </motion.button>
+            </form>
+          </motion.div>
+          <motion.div
+            className='textContainer'
+            variants={itemVariants}
+          >
+            <motion.h2 variants={itemVariants}>Your Journey Begins Here</motion.h2>
+            <motion.p variants={itemVariants}>Experience comfort and style with every ride.</motion.p>
+            <motion.p variants={itemVariants}>15% off for returning customers!</motion.p>
+          </motion.div>
         </div>
-      </main>
+      </motion.main>
     </Fragment>
   )
 }
 
 export default Home;
-
-

@@ -314,21 +314,6 @@ $transition: all 0.3s ease;
             }
           }
         }
-
-        .pickup-input {
-          width: 100%;
-          padding: 12px;
-          border: 1px solid rgba($secondary-color, 0.2);
-          border-radius: $border-radius;
-          font-size: 1em;
-          transition: $transition;
-
-          &:focus {
-            outline: none;
-            border-color: $primary-color;
-            box-shadow: 0 0 0 2px rgba($primary-color, 0.1);
-          }
-        }
       }
     }
 
@@ -404,6 +389,62 @@ $transition: all 0.3s ease;
         text-align: center;
         border: 1px solid rgba($secondary-color, 0.1);
       }
+    }
+  }
+}
+
+.pickup-info {
+  .pickup-input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid rgba($secondary-color, 0.2);
+    border-radius: $border-radius;
+    font-size: 1em;
+    transition: $transition;
+
+    &:focus {
+      outline: none;
+      border-color: $primary-color;
+      box-shadow: 0 0 0 2px rgba($primary-color, 0.1);
+    }
+  }
+}
+
+.passenger-info {
+  .passenger-inputs {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-bottom: 20px;
+
+    input, select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid rgba($secondary-color, 0.2);
+      border-radius: $border-radius;
+      font-size: 1em;
+      transition: $transition;
+
+      &:focus {
+        outline: none;
+        border-color: $primary-color;
+        box-shadow: 0 0 0 2px rgba($primary-color, 0.1);
+      }
+    }
+  }
+
+  .add-passenger-btn {
+    background-color: $secondary-color;
+    color: #fff;
+    border: none;
+    padding: 12px 20px;
+    border-radius: $border-radius;
+    font-size: 1em;
+    cursor: pointer;
+    transition: $transition;
+
+    &:hover {
+      background-color: darken($secondary-color, 10%);
     }
   }
 }

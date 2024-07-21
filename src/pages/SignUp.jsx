@@ -26,6 +26,7 @@ const SignUp = () => {
         dispatch(authRequest());
         try {
             const newUser = { username, email, password, role, phoneNumber };
+            console.log(newUser)
             const result = await register(newUser).unwrap();
     
             if (result.success === true) {

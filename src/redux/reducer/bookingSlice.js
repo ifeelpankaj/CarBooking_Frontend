@@ -1,14 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = JSON.parse(sessionStorage.getItem('cabBookingForm')) || {
+const initialState = {
   from: '',
   to: '',
-  pickupDate: '',
-  dropOffDate:'',
-  pickupTime: '',
-  cabType: 'one-way',
-  distance:'',
+  pickupDate: null,
+  dropOffDate: null,
+  cabType: 'OneWay',
+  distance: '',
 };
+
+
 
 export const cabBookingSlice = createSlice({
   name: 'cabBooking',

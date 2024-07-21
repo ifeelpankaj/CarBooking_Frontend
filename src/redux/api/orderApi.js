@@ -9,7 +9,7 @@ export const orderApi = createApi({
         credentials: 'include',
     }),
     tagTypes: ['orders'],
-    endpoints:(builder) =>({
+    endpoints: (builder) => ({
         bookCab: builder.mutation({
             query: (orderDetails) => ({
                 url: `/checkout`,
@@ -31,8 +31,19 @@ export const orderApi = createApi({
             }),
             invalidatesTags: ['orders'],
         }),
+        myOrder: builder.query({
+            query: () => ({
+                url: "mybooking",
+                method: "GET",
+            }),
+            providesTags: ["orders"],
+        }),
+        orderDetail:builder.query({
+            query:(id) =>`mybooking/${id}`,
+            providesTags:["orders"],
+        }),
     })
 
 })
 
-export const { usePaymentVerificationMutation,useBookCabMutation } = orderApi;
+export const { usePaymentVerificationMutation, useBookCabMutation ,useMyOrderQuery,useOrderDetailQuery} = orderApi;

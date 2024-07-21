@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useLoginMutation } from '../redux/api/userApi';
 import { useDispatch } from 'react-redux';
 import toast from 'react-hot-toast';
-import { authFailure, authRequest, authSuccess } from '../redux/reducer/userReducer';
+import { authFailure, authRequest, authSuccess, userExist } from '../redux/reducer/userReducer';
 import { Button } from '@chakra-ui/react';
 
 // have to check some button 
@@ -19,21 +19,23 @@ const Login = () => {
         dispatch(authRequest());
         try {
             const res = await login({ email, password }).unwrap();
-
+    
             if (res.success) {
                 dispatch(authSuccess({ user: res.user, token: res.token }));
                 toast.success(res.message);
+                dispatch(userExist(res));
                 navigate('/');
             } else {
-                throw new Error(res.message || 'Unexpected response from server');
+                toast.error(res.message || 'Unexpected response from server');
+                dispatch(authFailure(res.message || 'Unexpected response from server'));
             }
         } catch (err) {
-            console.error('Failed to login:', err);
             const errorMessage = err.data?.message || err.message || 'An error occurred during login';
             toast.error(errorMessage);
             dispatch(authFailure(errorMessage));
         }
     };
+    
 
     return (
         <Fragment>

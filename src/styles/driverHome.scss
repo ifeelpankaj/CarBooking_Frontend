@@ -1,0 +1,98 @@
+.driver-home {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    border-radius: 15px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  
+    h1 {
+      color: #2c3e50;
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 2rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+  
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+  
+      .document-input {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+  
+        label {
+          font-weight: bold;
+          color: #34495e;
+          font-size: 1rem;
+        }
+  
+        .file-input-wrapper {
+          position: relative;
+          overflow: hidden;
+          display: inline-block;
+          background: #fff;
+          border: 2px solid #3498db;
+          border-radius: 5px;
+          transition: all 0.3s ease;
+  
+          &:hover {
+            background: #ecf0f1;
+          }
+  
+          input[type="file"] {
+            font-size: 100px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            cursor: pointer;
+          }
+  
+          .file-name {
+            display: inline-block;
+            padding: 8px 20px;
+            color: #2980b9;
+            font-size: 0.9rem;
+          }
+        }
+      }
+  
+      button {
+        margin-top: 1rem;
+        padding: 1rem;
+        background-color: #2ecc71;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+  
+        &:hover {
+          background-color: #27ae60;
+        }
+      }
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .driver-home {
+      margin: 1rem;
+      padding: 1rem;
+  
+      h1 {
+        font-size: 1.5rem;
+      }
+  
+      .document-input {
+        flex-direction: column;
+      }
+    }
+  }

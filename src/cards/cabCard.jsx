@@ -1,52 +1,130 @@
-import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FaAirFreshener, FaGasPump, FaCar, FaUsers, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
 const CabCard = ({
-    availability,
-    belongsTo,
-    email,
-    _id,
-    capacity,
-    createdAt,
-    feature,
-    isReady,
-    modelName,
-    photos,
-    price,
-    type
+  availability,
+  _id,
+  capacity,
+  feature,
+  modelName,
+  photos,
+  price,
+  type
 }) => {
+  const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
 
-    return (
+  const nextPhoto = () => {
+    setCurrentPhotoIndex((prevIndex) => (prevIndex + 1) % photos.length);
+  };
 
-        <section className="cab-card">
-            <div className="carousel">
-                {photos.length > 0 ? (
-                    photos.map((photo, index) => (
-                        <img key={index} src={photo.url} alt={`Photo ${index + 1}`} />
-                    ))
-                ) : (
-                    <p>No photos available</p>
-                )}
-            </div>
-            <div className="cab-info">
-                <h2>{modelName}</h2>
-                <p className="price">₹ {price}</p>
-                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quasi at ipsa vero neque optio commodi laudantium! </p>
-                <div className="features">
-                    <span>Air Condition</span>
-                    <span>{_id}</span>
+  const prevPhoto = () => {
+    setCurrentPhotoIndex((prevIndex) => (prevIndex - 1 + photos.length) % photos.length);
+  };
 
-                    <span>Diesel</span>
-                    <span>Auto</span>
-                    <span>{capacity} Seater</span>
-                </div>
-                <Link className="book-button" to={`/cabs/${_id}`}>Book It</Link>
-            </div>
+  const cardVariants = {
+    hidden: { 
+      opacity: 0,
+      rotateY: -90
+    },
+    visible: { 
+      opacity: 1,
+      rotateY: 0,
+      transition: { 
+        type: "spring",
+        damping: 15,
+        stiffness: 100
+      }
+    },
+    hover: {
+      scale: 1.03,
+      boxShadow: "0px 10px 30px rgba(0, 0, 0, 0.2)",
+      transition: {
+        duration: 0.3
+      }
+    }
+  };
 
-        </section>
+  const imageVariants = {
+    enter: (direction) => {
+      return {
+        x: direction > 0 ? 1000 : -1000,
+        opacity: 0
+      };
+    },
+    center: {
+      zIndex: 1,
+      x: 0,
+      opacity: 1
+    },
+    exit: (direction) => {
+      return {
+        zIndex: 0,
+        x: direction < 0 ? 1000 : -1000,
+        opacity: 0
+      };
+    }
+  };
 
-    );
+  return (
+    <motion.section 
+      className="cab-card"
+      variants={cardVariants}
+      initial="hidden"
+      animate="visible"
+    //   whileHover="hover"
+    >
+      <div className="carousel">
+        <AnimatePresence initial={false} custom={currentPhotoIndex}>
+          <motion.img
+            key={currentPhotoIndex}
+            src={photos[currentPhotoIndex].url}
+            custom={currentPhotoIndex}
+            variants={imageVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={{
+              x: { type: "spring", stiffness: 300, damping: 30 },
+              opacity: { duration: 0.2 }
+            }}
+          />
+        </AnimatePresence>
+        <button className="carousel-button prev" onClick={prevPhoto}>
+          <FaChevronLeft />
+        </button>
+        <button className="carousel-button next" onClick={nextPhoto}>
+          <FaChevronRight />
+        </button>
+      </div>
+      <motion.div 
+        className="cab-info"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.3, duration: 0.5 }}
+      >
+        <h2>{modelName}</h2>
+        <p className="price">₹ {price.toFixed(2)}</p>
+        <p className="description">
+          Experience luxury and comfort with our {modelName}. Perfect for your journey 💫 ...
+        </p>
+        <div className="features">
+          <span><FaAirFreshener /> AC</span>
+          <span><FaGasPump /> {type}</span>
+          <span><FaCar /> Auto</span>
+          <span><FaUsers /> {capacity} Seater</span>
+        </div>
+        <motion.div
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          <Link className="book-button" to={`/cabs/${_id}`}>Book Now</Link>
+        </motion.div>
+      </motion.div>
+    </motion.section>
+   
+  );
 };
 
 export default CabCard;

@@ -11,7 +11,15 @@
 }
 
 body {
-    user-select: none;
+    padding-top: 60px; // Adjust this value based on your header's height
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
 }
 
 a {
@@ -36,6 +44,22 @@ $green: #C4EBC8;
 @import "cabCard";
 @import "carousel";
 @import "cabDetail";
+@import "profile";
+@import "orderCard";
+@import "bookingDetail";
+@import "driverHome";
+@import "cabRegister";
+@import "home1";
+@import "myride";
+@import "updatecab";
+
+
+
+
+
+
+
+
 
 
 

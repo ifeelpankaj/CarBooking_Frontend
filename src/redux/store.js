@@ -4,6 +4,7 @@ import userReducer from "./reducer/userReducer";
 import cabBookingSlice from "./reducer/bookingSlice";
 import { cabApi } from "./api/cabApi";
 import { orderApi } from "./api/orderApi";
+import { driverApi } from "./api/driverApi";
 
 
 
@@ -22,6 +23,9 @@ export const store = configureStore({
 
     //order
     [orderApi.reducerPath]:orderApi.reducer,
+
+    //driver
+    [driverApi.reducerPath]:driverApi.reducer,
  
   },
   middleware: (mid) => [
@@ -29,6 +33,7 @@ export const store = configureStore({
     userAPI.middleware,
     cabApi.middleware,
     orderApi.middleware,
+    driverApi.middleware,
    
   ],
 });
