@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { useCabDetailQuery } from '../redux/api/cabApi';
 import Carousel from '../components/Carousel';
 import {  useMeIdQuery } from '../redux/api/userApi';
+import Loader from '../components/Loader';
 
 
 
@@ -17,18 +18,24 @@ const BookingDetail = () => {
   const driverId = cabData?.cab?.belongsTo;
 
   const { data: userData, isLoading: userLoading } = useMeIdQuery(driverId, {
-    skip: !driverId,  // pass the query if bookedCabId is not available
+    skip: !driverId,  // pass the query if driverId is not available
   });
 
   
   
   
   if (orderLoading || cabLoading || userLoading) {
-    return <div className="loading">Loading...</div>;
+    return <Loader/>;
   }
   
-  if (!orderDetail?.order || !cabData?.cab || !userData?.user) {
-    return <div className="error">Error loading data</div>;
+  if (!orderDetail?.order) {
+    return <div className="error">Error loading  order details</div>;
+  }
+  if ( !cabData?.cab || !userData?.user) {
+    return <div className="error">Error loading  cab details</div>;
+  }
+  if ( !userData?.user) {
+    return <div className="error">Error loading  driver details</div>;
   }
   
   

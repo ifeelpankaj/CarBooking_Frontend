@@ -116,7 +116,6 @@
       font-size: $font-size-base;
       color: $secondary-color;
       text-align: left;
-
     }
   }
 
@@ -168,6 +167,7 @@
         margin: $spacing-small auto;
       }
     }
+   
 
     .order-details {
       flex-direction: column;
@@ -180,4 +180,15 @@
       margin-top: $spacing-large;
     }
   }
+  .order-card .order-amount .paid {
+    font-size: 16px;
+    color: #2ecc71;
+    text-align: right;
+}
+.order-card .order-amount .total {
+  font-size: 18px;
+  font-weight: 700;
+  color: #f4c600;
+  text-align: right;
+}
 }

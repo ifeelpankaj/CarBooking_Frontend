@@ -1,25 +1,35 @@
 import React from 'react';
 import { useGetDriverCabQuery } from '../redux/api/cabApi';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Carousel from '../components/Carousel';
+import{Button} from '@chakra-ui/react'
+import { MdArrowForward } from "react-icons/md";
 
 
-const CabCard = ({ cab }) => (
 
+const CabCard = ({ cab }) => {
+  const navigate = useNavigate();
+
+  const handleSubmit = () => {
+    navigate(`/myRide/${cab._id}`);
+  };
+
+  return (
     <div className="cab-card">
       <Carousel images={cab.photos} />
       <div className="cab-info">
         <h2>{cab.modelName}</h2>
-        <p><span>Availability:</span> {cab.avalibility}</p>
+        <p><span>Availability:</span> {cab.availability}</p>
         <p><span>Capacity:</span> {cab.capacity} persons</p>
         <p><span>Feature:</span> {cab.feature}</p>
         <p><span>Status:</span> {cab.isReady ? 'Ready' : 'Not Ready'}</p>
         <p><span>Created:</span> {new Date(cab.createdAt).toLocaleDateString()}</p>
-        <Link to={`/myRide/${cab._id}`}>Details</Link>
+        <Button colorScheme='pink' rightIcon={<MdArrowForward />} onClick={handleSubmit}>Details</Button>
       </div>
     </div>
+  );
+};
 
-);
 
 
 

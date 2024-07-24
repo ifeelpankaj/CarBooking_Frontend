@@ -5,6 +5,7 @@ import Header from './components/Header';
 import { Toaster } from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { useUser } from './hooks/useUser';
+import Footer from './components/Footer';
 
 
 
@@ -50,18 +51,20 @@ const App = () => {
           <Route path="/signup" element={user ? <Navigate to="/profile" /> : <SignUp />} />
           <Route path="/profile" element={user ? <Profile /> : <Navigate to="/login" />} />
           <Route 
-          path="/cabs" element={user && user.role === "Passenger" || "Admin" ? <Cabs /> : <Navigate to="/login" />} 
+          path="/cabs" element={user && user.role === "Passenger" ? <Cabs /> : <Navigate to="/login" />} 
           />
-          <Route path="/cabs/:id" element={user && user.role === "Passenger" || "Admin" ? <CabDetail /> : <Navigate to="/login" />} />
-          <Route path="/bookings" element= {user && user.role === "Passenger" || "Admin" ? <Booking /> : <Navigate to="/login" />}/>
-          <Route path="/booking/:id" element={user && user.role === "Passenger" || "Admin" ?<BookingDetail /> : <Navigate to="/login"/>} />
+          <Route path="/cabs/:id" element={user && user.role === "Passenger" ? <CabDetail /> : <Navigate to="/login" />} />
+          <Route path="/bookings" element= {user && user.role === "Passenger" ? <Booking /> : <Navigate to="/login" />}/>
+          <Route path="/booking/:id" element={user && user.role === "Passenger"  ?<BookingDetail /> : <Navigate to="/login"/>} />
 
 
-          <Route path="/myRide" element={user && user.role === "Driver" || "Admin" ?<MyRide /> : <Navigate to="/profile"/>} />
+          <Route path="/myRide" element={user && user.role === "Driver"  ?<MyRide /> : <Navigate to="/profile"/>} />
 
-          <Route path="/myRide/:id" element={user && user.role === "Driver" || "Admin" ?<MyRideDetails /> : <Navigate to="/profile"/>} />
+          <Route path="/myRide/:id" element={user && user.role === "Driver" ?<MyRideDetails /> : <Navigate to="/profile"/>} />
+          <Route path='/loader' element={<Loader/>}/>
         </Routes>
       </Suspense>
+      <Footer/>
       <Toaster position="top-center" />
     </Router>
   );

@@ -4,6 +4,7 @@ import { FaUser, FaPhone, FaCamera } from 'react-icons/fa';
 import { AiOutlineMail } from "react-icons/ai";
 import toast from 'react-hot-toast';
 import NotFound from '../components/NotFound';
+import { Button } from '@chakra-ui/react';
 
 const Profile = () => {
     const { data: me, isLoading } = useMeQuery();
@@ -76,45 +77,7 @@ const Profile = () => {
             </header>
 
             <main className="profile-content">
-                <section className="account-info">
-                    <h2>My account</h2>
-                    <button className="settings-btn" onClick={isEditing ? handleUpdate : handleEdit}>
-                        {isEditing ? 'Save Changes' : 'Edit Profile'}
-                    </button>
-
-                    <div className="user-info">
-                        <div className="info-item">
-                            <label><FaUser /> Username</label>
-                            {isEditing ? (
-                                <input
-                                    name="name"
-                                    value={editedProfile.name || ''}
-                                    onChange={handleInputChange}
-                                />
-                            ) : (
-                                <p>{profile.name}</p>
-                            )}
-                        </div>
-                        <div className="info-item">
-                            <label><AiOutlineMail />Email address</label>
-                            <p>{profile.email}</p>
-                        </div>
-                        <div className="info-item">
-                            <label><FaPhone /> Phone</label>
-                            {isEditing ? (
-                                <input
-                                    name="phoneNumber"
-                                    value={editedProfile.phoneNo || ''}
-                                    onChange={handleInputChange}
-                                />
-                            ) : (
-                                <p>{profile.phoneNo}</p>
-                            )}
-                        </div>
-                    </div>
-                </section>
-
-                <aside className="profile-sidebar">
+            <aside className="profile-sidebar">
                     <div className="avatar">
                         {isEditing ? (
                             <div onClick={handleAvatarClick}>
@@ -149,6 +112,45 @@ const Profile = () => {
                         <p className="message-btn">{profile.role}</p>
                     </div>
                 </aside>
+                <section className="account-info">
+                    <h2>My account</h2>
+                    <Button  isLoading = {updateLoading} className="settings-btn" onClick={isEditing ? handleUpdate : handleEdit}>
+                        {isEditing ? 'Save Changes' : 'Edit Profile'}
+                    </Button>
+
+                    <div className="user-info">
+                        <div className="info-item">
+                            <label><FaUser /> Username</label>
+                            {isEditing ? (
+                                <input
+                                    name="name"
+                                    value={editedProfile.name || ''}
+                                    onChange={handleInputChange}
+                                />
+                            ) : (
+                                <p>{profile.name}</p>
+                            )}
+                        </div>
+                        <div className="info-item">
+                            <label><AiOutlineMail />Email address</label>
+                            <p>{profile.email}</p>
+                        </div>
+                        <div className="info-item">
+                            <label><FaPhone /> Phone</label>
+                            {isEditing ? (
+                                <input
+                                    name="phoneNumber"
+                                    value={editedProfile.phoneNo || ''}
+                                    onChange={handleInputChange}
+                                />
+                            ) : (
+                                <p>{profile.phoneNo}</p>
+                            )}
+                        </div>
+                    </div>
+                </section>
+
+                
             </main>
         </div>
     );

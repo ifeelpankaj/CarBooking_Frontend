@@ -1,14 +1,23 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useCabDetailQuery } from '../redux/api/cabApi';
 import { useNavigate, useParams } from 'react-router-dom';
 import Carousel from '../components/Carousel';
 import toast from 'react-hot-toast';
 import { useBookCabMutation, usePaymentVerificationMutation } from '../redux/api/orderApi';
+import Loader from '../components/Loader';
 
 const CabDetail = () => {
     const navigate = useNavigate();
     const bookingData = useSelector((state) => state.cabBooking);
+
+    useEffect(() => {
+        if (!bookingData.from || !bookingData.to) {
+          toast("It seems you have reloaded the page kindly fill the details again");
+          navigate("/");
+        }
+      }, [bookingData, navigate]);
+
     const { id } = useParams();
     const { data: cabs, isLoading } = useCabDetailQuery(id);
 
@@ -31,11 +40,10 @@ const CabDetail = () => {
     };
 
     if (isLoading) {
-        return <div>Loading...</div>;
+        return <Loader/>
     }
-
     if (!cabs || !cabs.cab) {
-        return <div>Loading...</div>;
+        return <Loader/>;
     }
 
     const imageGallery = cabs.cab.photos || [];
@@ -67,6 +75,7 @@ const CabDetail = () => {
         };
 
         try {
+            console.log(orderDetails)
             const { data } = await bookCab(orderDetails);
 
             if (paymentMethod === 'Online' || paymentMethod === 'Hybrid') {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useCabDetailQuery, useUpdateCabMutation } from '../redux/api/cabApi';
 
@@ -12,6 +12,7 @@ const MyRideDetails = () => {
     modelName: '',
     feature: '',
     capacity: '',
+    cabNumber: '',
     photos: []
   });
 
@@ -21,7 +22,8 @@ const MyRideDetails = () => {
         modelName: cabData.cab.modelName,
         feature: cabData.cab.feature,
         capacity: cabData.cab.capacity,
-        photos: cabData.cab.photos
+        photos: cabData.cab.photos,
+        cabNumber: cabData.cab.cabNumber,
       });
     }
   }, [cabData]);
@@ -59,71 +61,98 @@ const MyRideDetails = () => {
   };
 
   if (isLoading) return <div className="loading">Loading...</div>;
-
+  const scrollLeft = () => {
+    const container = document.querySelector('.photo-container');
+    container.scrollBy({ left: -300, behavior: 'smooth' });
+  };
+  
+  const scrollRight = () => {
+    const container = document.querySelector('.photo-container');
+    container.scrollBy({ left: 300, behavior: 'smooth' });
+  };
   return (
-    <div className="my-ride-details">
-      <h1>Edit Cab Details</h1>
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="modelName">Model Name:</label>
-          <input
-            type="text"
-            id="modelName"
-            name="modelName"
-            value={formData.modelName}
-            onChange={handleInputChange}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="feature">Feature:</label>
-          <input
-            type="text"
-            id="feature"
-            name="feature"
-            value={formData.feature}
-            onChange={handleInputChange}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="capacity">Capacity:</label>
-          <input
-            type="number"
-            id="capacity"
-            name="capacity"
-            value={formData.capacity}
-            onChange={handleInputChange}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="photos">Photos:</label>
-          <input
-            type="file"
-            id="photos"
-            name="photos"
-            multiple
-            onChange={handleFileChange}
-          />
-        </div>
-        <button type="submit" disabled={isUpdating}>
-          {isUpdating ? 'Updating...' : 'Update Cab'}
-        </button>
-      </form>
-      <div className="current-details">
-        <h2>Current Details:</h2>
-        <p><strong>Model Name:</strong> {cabData.cab.modelName}</p>
-        <p><strong>Feature:</strong> {cabData.cab.feature}</p>
-        <p><strong>Capacity:</strong> {cabData.cab.capacity}</p>
-        <p><strong>Is Ready:</strong> {cabData.cab.isReady ? 'Yes' : 'No'}</p>
-        <p><strong>Type:</strong> {cabData.cab.type}</p>
-        <div className="photos">
-          <h3>Current Photos:</h3>
-          {cabData.cab.photos.map((photo, index) => (
-            <img key={index} src={photo.url} alt={`Cab view ${index + 1}`} />
-          ))}
-        </div>
+    <Fragment>
+      <div className="my-ride-details">
+        <h1>Edit Cab Details</h1>
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="modelName">Model Name:</label>
+            <input
+              type="text"
+              id="modelName"
+              name="modelName"
+              value={formData.modelName}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="feature">Feature:</label>
+            <input
+              type="text"
+              id="feature"
+              name="feature"
+              value={formData.feature}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="feature">Veichel Number:</label>
+            <input
+              type="text"
+              id="feature"
+              name="feature"
+              value={formData.cabNumber}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="capacity">Capacity:</label>
+            <input
+              type="number"
+              id="capacity"
+              name="capacity"
+              value={formData.capacity}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="photos">Photos:</label>
+            <input
+              type="file"
+              id="photos"
+              name="photos"
+              multiple
+              onChange={handleFileChange}
+            />
+          </div>
+          <button type="submit" disabled={isUpdating}>
+            {isUpdating ? 'Updating...' : 'Update Cab'}
+          </button>
+        </form>
+        <section className='cab-current-details'>
+          <div className="current-details">
+            <h2>Current Details</h2>
+            <p><strong>Model Name:</strong> {cabData.cab.modelName}</p>
+            <p><strong>Feature:</strong> {cabData.cab.feature}</p>
+            <p><strong>Capacity:</strong> {cabData.cab.capacity}</p>
+            <p><strong>Is Ready:</strong> {cabData.cab.isReady ? 'Yes' : 'No'}</p>
+            <p><strong>Type:</strong> {cabData.cab.type ? cabData.cab.type : "Petrol"}</p>
+          </div>
+          <div className="photos">
+            <h3>Current Photos</h3>
+            <button className="scroll-button scroll-left" onClick={scrollLeft}>&lt;</button>
+            <div className="photo-container">
+              {cabData.cab.photos.map((photo, index) => (
+                <img key={index} src={photo.url} alt={`Cab view ${index + 1}`} />
+              ))}
+            </div>
+            <button className="scroll-button scroll-right" onClick={scrollRight}>&gt;</button>
+          </div>
+        </section>
       </div>
-    </div>
+    </Fragment>
   );
 };
 
 export default MyRideDetails;
+

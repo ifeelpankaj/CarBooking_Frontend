@@ -45,10 +45,25 @@ export const cabApi = createApi({
                 body:newData,
             }),
             invalidatesTags:['cabs']
-        })
+        }),
+        calculateDistance: builder.query({
+            query: ({origin, destination}) => ({
+                url: "calculate-distance",
+                method: "GET",
+                params: { origin, destination }
+            }),
+            transformResponse: (response) => {
+                // Assuming the backend returns the distance and duration
+                console.log(response)
+                return {
+                    distance: response.distance,
+                    duration: response.duration
+                };
+            },
+        }),
         
     })
 
 })
 
-export const { useShowCabsQuery,useCabDetailQuery,useCabRegisterMutation ,useGetDriverCabQuery,useUpdateCabMutation} = cabApi;
+export const { useShowCabsQuery,useCabDetailQuery,useCabRegisterMutation ,useGetDriverCabQuery,useUpdateCabMutation,useCalculateDistanceQuery} = cabApi;

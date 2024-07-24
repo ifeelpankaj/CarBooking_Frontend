@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaCar, FaMapMarkerAlt, FaCalendarAlt, FaClock } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
@@ -12,6 +12,9 @@ const Home = () => {
   const formData = useSelector((state) => state.cabBooking);
   const navigate = useNavigate();
   const [tripType, setTripType] = useState('OneWay');
+
+
+  
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -30,6 +33,30 @@ const Home = () => {
   const toggleTripType = () => {
     setTripType(tripType === 'OneWay' ? 'RoundTrip' : 'OneWay');
     dispatch(updateFormField({ field: 'cabType', value: tripType === 'OneWay' ? 'RoundTrip' : 'OneWay' }));
+  };
+
+  const fromInputRef = useRef(null);
+  const toInputRef = useRef(null);
+
+  useEffect(() => {
+    const initAutocomplete = () => {
+      if (window.google) {
+        const fromAutocomplete = new window.google.maps.places.Autocomplete(fromInputRef.current);
+        const toAutocomplete = new window.google.maps.places.Autocomplete(toInputRef.current);
+
+        fromAutocomplete.addListener('place_changed', () => handlePlaceSelect(fromAutocomplete, 'from'));
+        toAutocomplete.addListener('place_changed', () => handlePlaceSelect(toAutocomplete, 'to'));
+      }
+    };
+
+    initAutocomplete();
+  }, []);
+
+  const handlePlaceSelect = (autocomplete, field) => {
+    const place = autocomplete.getPlace();
+    if (place.formatted_address) {
+      dispatch(updateFormField({ field, value: place.formatted_address }));
+    }
   };
 
   const containerVariants = {
@@ -78,6 +105,7 @@ const Home = () => {
                 <FaMapMarkerAlt className="input-icon" />
                 <input
                   type="text"
+                  ref={fromInputRef}
                   placeholder="Pick-up Location"
                   value={formData.from}
                   onChange={handleInputChange('from')}
@@ -88,6 +116,7 @@ const Home = () => {
                 <FaMapMarkerAlt className="input-icon" />
                 <input
                   type="text"
+                  ref={toInputRef}
                   placeholder="Drop-off Location"
                   value={formData.to}
                   onChange={handleInputChange('to')}
@@ -97,7 +126,7 @@ const Home = () => {
               <motion.div className="form-group" variants={itemVariants}>
                 <FaCalendarAlt className="input-icon" />
                 <DatePicker
-                  selected={formData.pickupDate}
+                  selected={formData.pickupDate ? new Date(formData.pickupDate) : null}
                   onChange={handleDateChange('pickupDate')}
                   dateFormat="MMMM d, yyyy"
                   placeholderText="Pick-Up Date"
@@ -119,11 +148,17 @@ const Home = () => {
                   >
                     <FaCalendarAlt className="input-icon" />
                     <DatePicker
-                      selected={formData.dropOffDate}
+                      selected={formData.dropOffDate ? new Date(formData.dropOffDate) : null}
                       onChange={handleDateChange('dropOffDate')}
                       dateFormat="MMMM d, yyyy"
                       placeholderText="Drop-Off Date"
                       required
+                      className="custom-datepicker"
+                      calendarClassName="custom-calendar"
+                      popperClassName="custom-popper"
+                      wrapperClassName="custom-wrapper"
+                      showPopperArrow={false}
+                      minDate={formData.pickupDate ? new Date(formData.pickupDate) : null}
                     />
                   </motion.div>
                 </AnimatePresence>
@@ -154,3 +189,4 @@ const Home = () => {
 }
 
 export default Home;
+

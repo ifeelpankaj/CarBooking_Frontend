@@ -120,23 +120,60 @@
   }
 }
 
+// Assuming the rest of your SASS file remains unchanged, here's the refined mobile-specific part:
+
 @media (max-width: 768px) {
-  .header {
+    .header {
       &__nav {
-          display: none;
+        display: none; // Keeps navigation hidden on mobile as per original design
       }
-
+  
       &__user {
-          &-menu {
-              flex-direction: column;
-              align-items: flex-end;
+        &-menu {
+          flex-direction: column;
+          align-items: flex-end;
+          position: relative; // Ensure positioning context for dropdown
+        }
+  
+        &-dropdown {
+          position: absolute; // Changed from static to absolute for better control
+          top: 100%; // Aligns dropdown just below the user icon
+          right: 0; // Aligns dropdown to the right edge of the parent
+          width: auto; // Allows the dropdown width to adjust based on content
+          min-width: 150px; // Sets a minimum width for the dropdown
+          margin-top: 0.5rem; // Adds a small space between the icon and dropdown
+          background-color: $color1; // Ensures consistent color scheme
+          border-radius: 8px;
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+          padding: 0.5rem 0; // Reduces vertical padding for tighter layout
+          z-index: 1000; // Ensures dropdown appears above other content
+  
+          &::before {
+            content: '';
+            position: absolute;
+            top: -10px; // Adjusts the position of the arrow indicator
+            right: 15px; // Centers the arrow horizontally in the dropdown
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-bottom: 10px solid $color1; // Matches the dropdown background color
           }
-
-          &-dropdown {
-              position: static;
-              width: 100%;
-              margin-top: 1rem;
+  
+          &-link {
+            display: block; // Stacks links vertically
+            color: $color2;
+            padding: 0.5rem 1rem; // Adjusts padding for touch targets
+            transition: background-color 0.3s ease;
+  
+            &:hover {
+              background-color: rgba($purple, 0.1); // Provides visual feedback on hover
+            }
           }
+        }
+  
+        &-toggle {
+          justify-content: flex-end; // Aligns the toggle button to the right
+        }
       }
+    }
   }
-} 
+  

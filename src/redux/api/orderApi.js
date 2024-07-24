@@ -42,8 +42,12 @@ export const orderApi = createApi({
             query:(id) =>`mybooking/${id}`,
             providesTags:["orders"],
         }),
+        getPendingOrder:builder.query({
+            query:() =>"pendingorders",
+            providesTags:['orders'],
+        })
     })
 
 })
 
-export const { usePaymentVerificationMutation, useBookCabMutation ,useMyOrderQuery,useOrderDetailQuery} = orderApi;
+export const { usePaymentVerificationMutation, useBookCabMutation ,useMyOrderQuery,useOrderDetailQuery ,useGetPendingOrderQuery} = orderApi;

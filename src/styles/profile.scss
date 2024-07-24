@@ -6,6 +6,8 @@
     padding: 2rem;
     font-family: $font-primary;
     color: $text-color;
+    display: flex;
+    flex-direction: column;
     
     .profile-header {
         background: linear-gradient(to right, $primary-color, darken($primary-color, 10%));
@@ -31,7 +33,8 @@
     .profile-content {
         display: flex;
         gap: 2rem;
-        
+        width: 100%;
+        flex-wrap: wrap;
         .account-info {
             flex: 1;
             background-color: $white;
@@ -91,7 +94,7 @@
             width: 250px;
             text-align: center;
             animation: fadeInRight $transition-speed-base ease-out;
-            
+            padding: 1rem;
             .avatar {
                 width: 150px;
                 height: 150px;
@@ -218,5 +221,98 @@
     to {
         opacity: 1;
         transform: translateX(0);
+    }
+}
+
+// Additions and modifications for mobile responsiveness
+
+@media (max-width: 768px) {
+    .profile-container {
+        padding: 1rem;
+        
+        .profile-header {
+            padding: 1.5rem;
+            
+            h1 {
+                font-size: $font-size-xlarge;
+            }
+            
+            p {
+                font-size: $font-size-small;
+                max-width: none;
+            }
+        }
+        
+        .profile-content {
+            flex-direction: column;
+            gap: 1rem;
+            
+            .account-info {
+                padding: 1rem;
+                
+                h2 {
+                    font-size: $font-size-large;
+                }
+                
+                .settings-btn {
+                    float: none;
+                    display: block;
+                    width: fit-content;
+                    margin: 0 auto;
+                }
+                
+                .user-info {
+                    .info-item {
+                        label {
+                            flex-direction: column;
+                            align-items: start;
+                            
+                            svg {
+                                margin-bottom: $spacing-small;
+                            }
+                        }
+                        
+                        input {
+                            width: 100%;
+                        }
+                    }
+                }
+            }
+            
+            .profile-sidebar {
+                width: 100%;
+                text-align: left;
+                padding-left: 1rem;
+                
+                .avatar {
+                    width: 100px;
+                    height: 100px;
+                    margin-bottom: 0.5rem;
+                }
+                
+                .profile-actions {
+                    flex-direction: row;
+                    justify-content: space-around;
+                    
+                    .connect-btn, .message-btn {
+                        padding: $spacing-small $spacing-base;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (min-width: 768px) {
+    .profile-content {
+        flex-wrap: nowrap; /* Prevent wrapping */
+    }
+
+    .account-info {
+        flex-grow: 1; /* Allow account info to take up remaining space */
+    }
+
+    .profile-sidebar {
+        flex-basis: 250px; /* Set a base width for the sidebar */
     }
 }

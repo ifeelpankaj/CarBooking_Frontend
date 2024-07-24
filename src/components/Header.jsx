@@ -30,6 +30,19 @@ const Header = () => {
         }
     };
 
+    const handleClickOutside = (event) => {
+        if (!event.target.closest('.header__user-menu')) {
+            setIsMenuOpen(false);
+        }
+    };
+
+    // Add event listener for clicks on the document
+    useEffect(() => {
+        document.addEventListener('click', handleClickOutside);
+        return () => {
+            document.removeEventListener('click', handleClickOutside);
+        };
+    }, []);
     return (
         <motion.header 
             className="header"

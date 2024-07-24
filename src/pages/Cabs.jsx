@@ -1,19 +1,29 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useShowCabsQuery } from '../redux/api/cabApi';
+import { useCalculateDistanceQuery, useShowCabsQuery } from '../redux/api/cabApi';
 import CabCard from '../cards/cabCard';
 import { updateFormField } from '../redux/reducer/bookingSlice';
-
+import Loader from '../components/Loader';
+import { motion } from 'framer-motion';
 
 const Cabs = () => {
-    const dispatch = useDispatch();
-    const formData = useSelector((state) => state.cabBooking);
-    const distance = 1236;
-    const { data: cabs, isLoading } = useShowCabsQuery();
+  const dispatch = useDispatch();
+  const formData = useSelector((state) => state.cabBooking);
+  const { data: cabs, isLoading: cabsLoading } = useShowCabsQuery();
+  
+  const { data: distanceData, isLoading: distanceLoading } = useCalculateDistanceQuery(
+    { origin: formData.from, destination: formData.to },
+    { skip: !formData.from || !formData.to }
+  );
 
-    useEffect(() => {
-        dispatch(updateFormField({ field: 'distance', value: distance }));
-    }, [dispatch, distance]);
+  useEffect(() => {
+    if (distanceData && distanceData.distance) {
+      const distanceInKm = parseFloat(distanceData.distance.split(' ')[0]);
+      dispatch(updateFormField({ field: 'distance', value: distanceInKm }));
+    }
+  }, [dispatch, distanceData]);
+
+  const isLoading = cabsLoading || distanceLoading;
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -26,17 +36,21 @@ const Cabs = () => {
   };
 
   return (
-    <main 
-      className='cab-page'
-    >
+    <main className='cab-page'>
       {isLoading ? (
-        <p>
-          Loading...
-        </p>
+        <div className="loader-container">
+          <Loader />
+        </div>
       ) : (
-        <div className="cab-list">
+        <motion.div 
+          className="cab-list"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          
           {cabs && cabs.map((cab) => (
-            <div
+            <motion.div
               key={cab._id}
               variants={containerVariants}
             >
@@ -47,15 +61,14 @@ const Cabs = () => {
                 feature={cab.feature}
                 modelName={cab.modelName}
                 photos={cab.photos}
-                price={(cab.rate) * distance}
+                price={(cab.rate) * (formData.distance || 0)}
                 type={cab.type}
               />
-            </div>
+            </motion.div>
           ))}
-        </div>
-       )} 
+        </motion.div>
+      )}
     </main>
-    
   );
 };
 
