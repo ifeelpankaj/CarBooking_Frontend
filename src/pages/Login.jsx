@@ -19,7 +19,7 @@ const Login = () => {
         dispatch(authRequest());
         try {
             const res = await login({ email, password }).unwrap();
-    
+
             if (res.success) {
                 dispatch(authSuccess({ user: res.user, token: res.token }));
                 toast.success(res.message);
@@ -35,7 +35,7 @@ const Login = () => {
             dispatch(authFailure(errorMessage));
         }
     };
-    
+
 
     return (
         <Fragment>
@@ -83,3 +83,4 @@ const Login = () => {
 }
 
 export default Login
+

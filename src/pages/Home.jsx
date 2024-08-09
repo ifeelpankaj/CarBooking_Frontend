@@ -12,10 +12,7 @@ const Home = () => {
   const formData = useSelector((state) => state.cabBooking);
   const navigate = useNavigate();
   const [tripType, setTripType] = useState('OneWay');
-
-
   
-
   const handleSubmit = (event) => {
     event.preventDefault();
     navigate('/cabs');
@@ -52,12 +49,14 @@ const Home = () => {
     initAutocomplete();
   }, []);
 
+  
   const handlePlaceSelect = (autocomplete, field) => {
     const place = autocomplete.getPlace();
     if (place.formatted_address) {
       dispatch(updateFormField({ field, value: place.formatted_address }));
     }
   };
+ 
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -90,7 +89,7 @@ const Home = () => {
             variants={itemVariants}
           >
             <motion.h1 className='title' variants={itemVariants}>
-              <FaCar /> VelocityRide
+               VelocityRide
             </motion.h1>
             <motion.div className="trip-toggle" onClick={toggleTripType}>
               <motion.div
@@ -136,6 +135,7 @@ const Home = () => {
                   popperClassName="custom-popper"
                   wrapperClassName="custom-wrapper"
                   showPopperArrow={false}
+                  minDate={ new Date()}
                 />
               </motion.div>
               {tripType === 'RoundTrip' && (
@@ -170,7 +170,7 @@ const Home = () => {
                 whileTap={{ scale: 0.95 }}
                 className='SearchCab-button'
               >
-                Search Cabs
+                Go for it
               </motion.button>
             </form>
           </motion.div>

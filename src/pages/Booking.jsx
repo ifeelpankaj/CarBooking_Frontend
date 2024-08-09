@@ -7,7 +7,7 @@ import Loader from '../components/Loader';
 
 const Booking = () => {
   const { data: Order, isLoading } = useMyOrderQuery();
-  console.log(Order)
+
   if(!Order){
     return <NotFound/>
   }
@@ -18,7 +18,7 @@ const Booking = () => {
 
   return (
     <Fragment>
-      <div className="booking-container">
+      <div className="booking_container">
         {Order.orders.map((order) => (
           <OrderCard key={order._id} order={order} />
         ))}

@@ -1,5 +1,5 @@
 // DocumentVerification.jsx
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
 import { useDocVerificationMutation } from '../../redux/api/driverApi';
@@ -18,7 +18,17 @@ const DocumentVerification = ({ onSubmitSuccess }) => {
     insurance: null,
     puc: null
   });
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const checkIfMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
 
+    checkIfMobile();
+    window.addEventListener('resize', checkIfMobile);
+
+    return () => window.removeEventListener('resize', checkIfMobile);
+  }, []);
   const [showDocument, setShowDocument] = useState(null);
 
   const handleFileChange = (event, docType) => {
@@ -47,29 +57,59 @@ const DocumentVerification = ({ onSubmitSuccess }) => {
       toast.success(result.message);
       onSubmitSuccess();
     } catch (error) {
-      toast.error(error.message);
+      toast.error(error.data.message);
     }
   };
 
   const toggleShowDocument = (docType) => {
     setShowDocument(showDocument === docType ? null : docType);
   };
+  const renderFilePreview = (file, docType) => {
+    if (file.type === 'application/pdf') {
+      if (isMobile) {
+        return (
+          <div className="pdf-preview">
+            <p>PDF file: {file.name}</p>
+            <a 
+              href={URL.createObjectURL(file)} 
+              download={file.name}
+              className="download-btn"
+            >
+              Download PDF
+            </a>
+          </div>
+        );
+      } else {
+        return (
+          <embed 
+            src={URL.createObjectURL(file)} 
+            type="application/pdf" 
+            width="100%" 
+            height="400px" 
+          />
+        );
+      }
+    } else if (file.type.startsWith('image/')) {
+      return <img src={URL.createObjectURL(file)} alt={`${docType} preview`} />;
+    } else {
+      return <p>Unsupported file type</p>;
+    }
+  };
 
   return (
     <motion.div
-      className="document-verification"
+      className="driver_document-verification"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <h1>Driver Document Submission</h1>
       <form onSubmit={handleSubmit}>
         {Object.entries(documents).map(([docType, file]) => (
-          <div key={docType} className="document-input">
+          <div key={docType} className="driver_document-item">
             <label htmlFor={docType}>
               {docType.charAt(0).toUpperCase() + docType.slice(1).replace(/([A-Z])/g, ' $1')}:
             </label>
-            <div className="file-input-wrapper">
+            <div className="driver_file-input-wrapper">
               <input
                 type="file"
                 id={docType}
@@ -77,13 +117,11 @@ const DocumentVerification = ({ onSubmitSuccess }) => {
                 accept=".pdf,image/*"
                 required
               />
-              <span className="file-name">
-                {file ? `${driver}_${docType.charAt(0).toUpperCase() + docType.slice(1)}` : 'No file chosen'}
-              </span>
+              
               {file && (
                 <button
                   type="button"
-                  className="show-document-btn"
+                  className="driver_show-document-btn"
                   onClick={() => toggleShowDocument(docType)}
                 >
                   {showDocument === docType ? 'Hide' : 'Show'}
@@ -93,23 +131,19 @@ const DocumentVerification = ({ onSubmitSuccess }) => {
             <AnimatePresence>
               {showDocument === docType && (
                 <motion.div
-                  className="document-preview"
+                  className="driver_document-preview"
                   initial={{ opacity: 0, height: 0 }}
                   animate={{ opacity: 1, height: 'auto' }}
                   exit={{ opacity: 0, height: 0 }}
                   transition={{ duration: 0.3 }}
                 >
-                  {file.type === 'application/pdf' ? (
-                    <embed src={URL.createObjectURL(file)} type="application/pdf" width="100%" height="300px" />
-                  ) : (
-                    <img src={URL.createObjectURL(file)} alt={`${docType} preview`} />
-                  )}
+                  {renderFilePreview(file, docType)}
                 </motion.div>
               )}
             </AnimatePresence>
           </div>
         ))}
-        <p className="file-requirements">Allowed file types: PDF and images. Maximum file size: 2MB</p>
+        <p className="driver_file-requirements">Allowed file types: PDF and images. Maximum file size: 2MB</p>
         <motion.button
           type="submit"
           disabled={isLoading}

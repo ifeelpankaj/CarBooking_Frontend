@@ -3,16 +3,9 @@ import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaAirFreshener, FaGasPump, FaCar, FaUsers, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
-const CabCard = ({
-  availability,
-  _id,
-  capacity,
-  feature,
-  modelName,
-  photos,
-  price,
-  type
-}) => {
+const CabCard = ({cab,price}) => {
+
+  const {  _id,capacity,modelName,photos,type} = cab
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
 
   const nextPhoto = () => {
@@ -69,13 +62,13 @@ const CabCard = ({
 
   return (
     <motion.section 
-      className="cab-card"
+      className="cabs_card"
       variants={cardVariants}
       initial="hidden"
       animate="visible"
     //   whileHover="hover"
     >
-      <div className="carousel">
+      <div className="cabs_carousel">
         <AnimatePresence initial={false} custom={currentPhotoIndex}>
           <motion.img
             key={currentPhotoIndex}
@@ -91,25 +84,25 @@ const CabCard = ({
             }}
           />
         </AnimatePresence>
-        <button className="carousel-button prev" onClick={prevPhoto}>
+        <button className="cabs_carousel_button prev" onClick={prevPhoto}>
           <FaChevronLeft />
         </button>
-        <button className="carousel-button next" onClick={nextPhoto}>
+        <button className="cabs_carousel_button next" onClick={nextPhoto}>
           <FaChevronRight />
         </button>
       </div>
       <motion.div 
-        className="cab-info"
+        className="cabs_info"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3, duration: 0.5 }}
       >
         <h2>{modelName}</h2>
-        <p className="price">₹ {price.toFixed(2)}</p>
-        <p className="description">
+        <p className="cabs_price">₹ {price.toFixed(2)}</p>
+        <p className="cabs_description">
           Experience luxury and comfort with our {modelName}. Perfect for your journey 💫 ...
         </p>
-        <div className="features">
+        <div className="cabs_features">
           <span><FaAirFreshener /> AC</span>
           <span><FaGasPump /> {type}</span>
           <span><FaCar /> Auto</span>
@@ -119,7 +112,7 @@ const CabCard = ({
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
-          <Link className="book-button" to={`/cabs/${_id}`}>Book Now</Link>
+          <Link className="cabs_book_button" to={`/cabs/${_id}`}>Book Now</Link>
         </motion.div>
       </motion.div>
     </motion.section>

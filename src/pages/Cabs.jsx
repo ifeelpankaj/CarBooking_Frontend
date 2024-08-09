@@ -10,21 +10,19 @@ const Cabs = () => {
   const dispatch = useDispatch();
   const formData = useSelector((state) => state.cabBooking);
   const { data: cabs, isLoading: cabsLoading } = useShowCabsQuery();
-  
   const { data: distanceData, isLoading: distanceLoading } = useCalculateDistanceQuery(
     { origin: formData.from, destination: formData.to },
     { skip: !formData.from || !formData.to }
   );
-
   useEffect(() => {
     if (distanceData && distanceData.distance) {
-      const distanceInKm = parseFloat(distanceData.distance.split(' ')[0]);
+      const distanceInKm = parseFloat(distanceData.distance.replace(/[^0-9.]/g, ''));
       dispatch(updateFormField({ field: 'distance', value: distanceInKm }));
     }
   }, [dispatch, distanceData]);
 
+  // console.log(distanceData)
   const isLoading = cabsLoading || distanceLoading;
-
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -36,14 +34,14 @@ const Cabs = () => {
   };
 
   return (
-    <main className='cab-page'>
+    <main className='cabs_page'>
       {isLoading ? (
-        <div className="loader-container">
+        <div className="cabs_loader_container">
           <Loader />
         </div>
       ) : (
         <motion.div 
-          className="cab-list"
+          className="cabs_list"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
@@ -55,14 +53,9 @@ const Cabs = () => {
               variants={containerVariants}
             >
               <CabCard
-                availability="Available"
-                _id={cab._id}
-                capacity={cab.capacity}
-                feature={cab.feature}
-                modelName={cab.modelName}
-                photos={cab.photos}
+                cab={cab}
                 price={(cab.rate) * (formData.distance || 0)}
-                type={cab.type}
+                
               />
             </motion.div>
           ))}

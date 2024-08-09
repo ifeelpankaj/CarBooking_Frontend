@@ -7,7 +7,7 @@ import toast from 'react-hot-toast';
 import { useBookCabMutation, usePaymentVerificationMutation } from '../redux/api/orderApi';
 import Loader from '../components/Loader';
 
-const CabDetail = () => {
+const Payment = () => {
     const navigate = useNavigate();
     const bookingData = useSelector((state) => state.cabBooking);
 
@@ -65,6 +65,7 @@ const CabDetail = () => {
             bookedCab: cabInfo._id,
             exactLocation,
             departureDate: bookingData.pickupDate,
+            dropOffDate:bookingData.dropOffDate || bookingData.pickupDate,
             pickupLocation: bookingData.from,
             destination: bookingData.to,
             numberOfPassengers: passengers.length,
@@ -75,7 +76,6 @@ const CabDetail = () => {
         };
 
         try {
-            console.log(orderDetails)
             const { data } = await bookCab(orderDetails);
 
             if (paymentMethod === 'Online' || paymentMethod === 'Hybrid') {
@@ -125,42 +125,42 @@ const CabDetail = () => {
         return new Date(dateString).toLocaleString();
       };
     return (
-        <main className='booking-review-main'>
-            <div className='booking-summary'>
-                <h2 className='booking-heading'>Review Your Booking</h2>
-                <p className='booking-info'>
+        <main className='book_review_main'>
+            <div className='book_summary'>
+                <h2 className='book_heading'>Review Your Booking</h2>
+                <p className='book_info'>
                     {bookingData.from} - {bookingData.to} | {bookingData.cabType} | {formatDate(bookingData.pickupDate)} on {bookingData.pickupTime} IST
                 </p>
             </div>
-            <div className='details-container'>
-                <section className='cab-details'>
-                    <div className='cab-image-container'>
-                        <h1 className='section-heading'>Your Ride Images</h1>
+            <div className='book_details_container'>
+                <section className='book_cab_details'>
+                    <div className='book_cab_image_container'>
+                        <h1 className='book_section_heading'>Your Ride Images</h1>
                         <Carousel images={imageGallery} />
                     </div>
-                    <div className='driver-info'>
-                        <h1 className='cab-model-name'>{cabInfo.modelName}</h1>
-                        <h1 className='section-heading'>About our drivers</h1>
-                        <p className='section-content'>100% of drivers are police verified, licensed, and audited</p>
+                    <div className='book_driver_info'>
+                        <h1 className='book_cab_model_name'>{cabInfo.modelName}</h1>
+                        <h1 className='book_section_heading'>About our drivers</h1>
+                        <p className='book_section_content'>100% of drivers are police verified, licensed, and audited</p>
                     </div>
-                    <div className='tour-inclusions'>
-                        <h1 className='section-heading'>Inclusions & exclusions</h1>
-                        <p className='section-content'>Included in your fare</p>
+                    <div className='book_tour_inclusions'>
+                        <h1 className='book_section_heading'>Inclusions & exclusions</h1>
+                        <p className='book_section_content'>Included in your fare</p>
                     </div>
-                    <div className='pickup-info'>
-                        <h1 className='section-heading'>Enter exact pick up location</h1>
+                    <div className='book_pickup_info'>
+                        <h1 className='book_section_heading'>Enter exact pick up location</h1>
                         <input
-                            className='pickup-input'
+                            className='book_pickup_input'
                             type='text'
                             value={exactLocation}
                             onChange={(e) => setExactLocation(e.target.value)}
                             placeholder="Enter your exact pickup location"
                         />
                     </div>
-                    <div className='passenger-info'>
-                        <h1 className='section-heading'>Enter Passenger Details</h1>
+                    <div className='book_passenger_info'>
+                        <h1 className='book_section_heading'>Enter Passenger Details</h1>
                         {passengers.map((passenger, index) => (
-                            <div key={index} className='passenger-inputs'>
+                            <div key={index} className='book_passenger_inputs'>
                                 <input
                                     type='text'
                                     placeholder='First Name'
@@ -190,28 +190,28 @@ const CabDetail = () => {
                                 />
                             </div>
                         ))}
-                        <button type='button' onClick={addPassenger} className='add-passenger-btn'>Add Another Passenger</button>
+                        <button type='button' onClick={addPassenger} className='book_add_passenger_btn'>Add Another Passenger</button>
                     </div>
-                    <div className='cancellation-policy'>
-                        <h1 className='section-heading'>Cancellation Policy</h1>
-                        <p className='section-content'></p>
+                    <div className='book_cancellation_policy'>
+                        <h1 className='book_section_heading'>Cancellation Policy</h1>
+                        <p className='book_section_content'>Enjoy Worry-Free Booking with Free Cancellation!</p>
                     </div>
-                    <div className='additional-info'>
-                        <h1 className='section-heading'>Other Information</h1>
-                        <ul className='info-list'>
+                    <div className='book_additional_info'>
+                        <h1 className='book_section_heading'>Other Information</h1>
+                        <ul className='book_info_list'>
                             <li>AC will be switched off in hilly areas</li>
                             <li>Only one pick-up, one drop & one pit stop for meal is included</li>
                         </ul>
                     </div>
                 </section>
-                <section className='payment-details'>
-                    <div className='total-amount'>
-                        <h1 className='section-heading'>Total Amount</h1>
-                        <h1 className='amount-value'>₹{TotalAmount}</h1>
+                <section className='book_payment_details'>
+                    <div className='book_total_amount'>
+                        <h1 className='book_section_heading'>Total Amount</h1>
+                        <h1 className='book_amount_value'>₹{TotalAmount}</h1>
                     </div>
-                    <div className='payment-options'>
-                        <h1 className='section-heading'>Payment Options</h1>
-                        <div className='payment-option'>
+                    <div className='book_payment_options'>
+                        <h1 className='book_section_heading'>Payment Options</h1>
+                        <div className='book_payment_option'>
                             <input
                                 type="radio"
                                 name="payment"
@@ -219,9 +219,9 @@ const CabDetail = () => {
                                 checked={paymentMethod === 'Hybrid'}
                                 onChange={() => setPaymentMethod('Hybrid')}
                             />
-                            <label htmlFor="hybrid-payment">Pay Partial Amount : {TotalAmount * 0.1}</label>
+                            <label htmlFor="hybrid-payment">Pay Partial Amount : ₹ {TotalAmount * 0.1}</label>
                         </div>
-                        <div className='payment-option'>
+                        <div className='book_payment_option'>
                             <input
                                 type="radio"
                                 name="payment"
@@ -229,9 +229,9 @@ const CabDetail = () => {
                                 checked={paymentMethod === 'Online'}
                                 onChange={() => setPaymentMethod('Online')}
                             />
-                            <label htmlFor="full-payment">Pay Full Amount : {TotalAmount}</label>
+                            <label htmlFor="full-payment">Pay Full Amount : ₹ {TotalAmount}</label>
                         </div>
-                        <div className='payment-option'>
+                        <div className='book_payment_option'>
                             <input
                                 type="radio"
                                 name="payment"
@@ -242,10 +242,10 @@ const CabDetail = () => {
                             <label htmlFor="cash-payment">Pay by Cash</label>
                         </div>
                     </div>
-                    <button onClick={submitHandler} disabled={isProcessing} className='payment-button'>
+                    <button onClick={submitHandler} disabled={isProcessing} className='book_payment_button'>
                         Place Order
                     </button>
-                    <div className='contact-info'>
+                    <div className='book_contact_info'>
                         <p>Contact us: +91 9999999999 | xyz@domain.com</p>
                     </div>
                 </section>
@@ -254,4 +254,4 @@ const CabDetail = () => {
     );
 };
 
-export default CabDetail;
+export default Payment;

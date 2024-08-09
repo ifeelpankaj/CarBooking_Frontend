@@ -46,6 +46,10 @@ export const cabApi = createApi({
             }),
             invalidatesTags:['cabs']
         }),
+        upcommingBooking: builder.query({
+            query: (cabId) => `get-upcomming-booking/${cabId}`,        
+            providesTags:["cabs"],
+        }),
         calculateDistance: builder.query({
             query: ({origin, destination}) => ({
                 url: "calculate-distance",
@@ -53,8 +57,6 @@ export const cabApi = createApi({
                 params: { origin, destination }
             }),
             transformResponse: (response) => {
-                // Assuming the backend returns the distance and duration
-                console.log(response)
                 return {
                     distance: response.distance,
                     duration: response.duration
@@ -66,4 +68,4 @@ export const cabApi = createApi({
 
 })
 
-export const { useShowCabsQuery,useCabDetailQuery,useCabRegisterMutation ,useGetDriverCabQuery,useUpdateCabMutation,useCalculateDistanceQuery} = cabApi;
+export const { useShowCabsQuery,useCabDetailQuery,useCabRegisterMutation ,useGetDriverCabQuery,useUpdateCabMutation,useCalculateDistanceQuery,useLazyUpcommingBookingQuery} = cabApi;

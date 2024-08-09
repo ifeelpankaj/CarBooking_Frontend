@@ -44,7 +44,6 @@ const MyRide = () => {
 
   return (
     <div className="my-ride">
-      <h1>My Rides</h1>
       {cabs.length > 0 ? (
         <div className="cab-list">
           {cabs.map(cab => (

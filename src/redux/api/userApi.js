@@ -50,7 +50,7 @@ export const userAPI = createApi({
         method: 'PUT',
         body: newData,
       }),
-      invalidatesTags: ['users'],
+      invalidatesTags: ['users','orders','cabs'],
     }),
     logout: builder.query({
       query: () => ({

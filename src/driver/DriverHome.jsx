@@ -3,8 +3,8 @@ import { motion } from 'framer-motion';
 import { useMeQuery } from '../redux/api/userApi';
 import DocumentVerification from '../components/driver/DocumentVerification';
 import CabRegistration from '../components/driver/CabRegistration';
-import Home1 from '../components/driver/Home1';
 import OrderSection from '../components/driver/OrderSection';
+import DriverDashBorad from '../components/driver/DriverDashboard';
 
 
 const DriverHome = () => {
@@ -27,31 +27,31 @@ const DriverHome = () => {
   return (
     <Fragment>
       <motion.div
-        className="driver-home"
+        className="driver_home_driver-home"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
       >
         <h1>Driver Dashboard</h1>
         <motion.div
-          className="content-wrapper"
+          className="driver_home_content-wrapper"
           initial={{ y: 50 }}
           animate={{ y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
           {!user.documented && (
-            <section className="section">
+            <section className="driver_home_driver_section">
               <h2>Document Verification</h2>
               <DocumentVerification onSubmitSuccess={handleSubmitSuccess} />
             </section>
           )}
           {user.documented && !user.haveCab && (
-            <section className="section">
+            <section className="driver_home_driver_section">
               <h2>Cab Registration</h2>
               <CabRegistration onSubmitSuccess={handleSubmitSuccess} />
             </section>
           )}
-          {user.documented && user.haveCab && <Home1 />}
+          {user.documented && user.haveCab && <DriverDashBorad />}
         </motion.div>
       </motion.div>
       <OrderSection />

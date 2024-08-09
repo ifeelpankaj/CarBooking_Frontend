@@ -44,7 +44,7 @@ export const orderApi = createApi({
         }),
         getPendingOrder:builder.query({
             query:() =>"pendingorders",
-            providesTags:['orders'],
+            providesTags:['orders','cab','user'],
         })
     })
 

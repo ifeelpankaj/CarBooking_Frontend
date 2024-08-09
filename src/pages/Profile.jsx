@@ -70,15 +70,15 @@ const Profile = () => {
     
 
     return (
-        <div className="profile-container">
-            <header className="profile-header">
-                <h1>Hello {profile.name}</h1>
+        <div className="profile_container">
+            <header className="profile_header">
+                <h1>Hello {(profile.name).toUpperCase()}</h1>
                 <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Doloribus facere aperiam id sequi quibusdam .</p>
             </header>
 
-            <main className="profile-content">
-            <aside className="profile-sidebar">
-                    <div className="avatar">
+            <main className="profile_content">
+            <aside className="profile_sidebar">
+                    <div className="profile_avatar">
                         {isEditing ? (
                             <div onClick={handleAvatarClick}>
                                 {newAvatar ? (
@@ -88,7 +88,7 @@ const Profile = () => {
                                 ) : (
                                     <div className="initial">{initialLetter}</div>
                                 )}
-                                <div className="avatar-overlay">
+                                <div className="profile_avatar_overlay">
                                     <FaCamera />
                                 </div>
                             </div>
@@ -96,7 +96,7 @@ const Profile = () => {
                             profile.avatar && profile.avatar.url ? (
                                 <img src={profile.avatar.url} alt="Avatar" />
                             ) : (
-                                <div className="initial">{initialLetter}</div>
+                                <div className="profile_initial">{initialLetter}</div>
                             )
                         )}
                         <input
@@ -107,19 +107,19 @@ const Profile = () => {
                             accept="image/*"
                         />
                     </div>
-                    <div className="profile-actions">
-                        <p className="connect-btn">{profile.verified && <span className="verified">Verified User</span>}</p>
-                        <p className="message-btn">{profile.role}</p>
+                    <div className="profile_actions">
+                        <p className="profile_connect_btn">{profile.verified && <span className="profile_verified">Verified User</span>}</p>
+                        <p className="profile_message_btn">{profile.role}</p>
                     </div>
                 </aside>
-                <section className="account-info">
+                <section className="profile_account_info">
                     <h2>My account</h2>
-                    <Button  isLoading = {updateLoading} className="settings-btn" onClick={isEditing ? handleUpdate : handleEdit}>
+                    <Button  isLoading = {updateLoading} className="profile_settings_btn" onClick={isEditing ? handleUpdate : handleEdit}>
                         {isEditing ? 'Save Changes' : 'Edit Profile'}
                     </Button>
 
-                    <div className="user-info">
-                        <div className="info-item">
+                    <div className="profile_user_info">
+                        <div className="profile_info_item">
                             <label><FaUser /> Username</label>
                             {isEditing ? (
                                 <input
@@ -128,18 +128,18 @@ const Profile = () => {
                                     onChange={handleInputChange}
                                 />
                             ) : (
-                                <p>{profile.name}</p>
+                                <p>{(profile.name).toUpperCase()}</p>
                             )}
                         </div>
-                        <div className="info-item">
+                        <div className="profile_info_item">
                             <label><AiOutlineMail />Email address</label>
                             <p>{profile.email}</p>
                         </div>
-                        <div className="info-item">
+                        <div className="profile_info_item">
                             <label><FaPhone /> Phone</label>
                             {isEditing ? (
                                 <input
-                                    name="phoneNumber"
+                                    name="phoneNo"
                                     value={editedProfile.phoneNo || ''}
                                     onChange={handleInputChange}
                                 />

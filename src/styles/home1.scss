@@ -1,33 +1,29 @@
+// .order-section {
+//   display: flex;
+//   flex-wrap: wrap;
+//   gap: 1rem;
+//   padding: 1rem;
 
-  
+//   .order-card {
+//     display: flex;
+//     flex-direction: column;
+//     border: 1px solid #ddd;
+//     border-radius: 8px;
+//     padding: 1rem;
+//     background-color: #fff;
+//     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+//     width: calc(33.33% - 1rem);
 
-  // OrderSection.scss
-.order-section {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  padding: 1rem;
+//     .order-info {
+//       h3 {
+//         margin: 0 0 0.5rem;
+//         color: #333;
+//       }
 
-  .order-card {
-    display: flex;
-    flex-direction: column;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 1rem;
-    background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: calc(33.33% - 1rem);
-
-    .order-info {
-      h3 {
-        margin: 0 0 0.5rem;
-        color: #333;
-      }
-
-      p {
-        margin: 0.25rem 0;
-        color: #555;
-      }
-    }
-  }
-}
+//       p {
+//         margin: 0.25rem 0;
+//         color: #555;
+//       }
+//     }
+//   }
+// }

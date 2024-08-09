@@ -11,7 +11,7 @@
 }
 
 body {
-    padding-top: 60px; // Adjust this value based on your header's height
+    padding-top: 56px; // Adjust this value based on your header's height
 }
 
 .header {
@@ -37,7 +37,7 @@ $cyan: #26F0F1;
 $green: #C4EBC8;
 
 
-@import "mixin";
+
 @import "login";
 @import "home";
 @import "header";
@@ -52,17 +52,8 @@ $green: #C4EBC8;
 @import "myride";
 @import "loader";
 @import "footer";
-
-
-
-
-
-
-
-
-
-
-
+@import "admin";
+@import "drivercomponent";
 
 
 

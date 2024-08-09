@@ -1,0 +1,37 @@
+:root {
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    font-weight: 400;
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+$primary: #ffd000;
+
+$lightBlack: #241d1d;
+
+//Imports
+@import 'components';
+@import 'header';
+@import 'home';
+@import 'auth';
+@import 'profile';
+@import 'cabs';
+@import 'payment';
+@import 'booking';
+
+@import './admin/admin';
+
+
+
+@import 'driver-dashboard';
+
+
+
+
+
+
+
