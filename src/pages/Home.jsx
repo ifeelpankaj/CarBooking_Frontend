@@ -1,11 +1,12 @@
 import React, { Fragment, useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaCar, FaMapMarkerAlt, FaCalendarAlt, FaClock } from 'react-icons/fa';
+import {  FaMapMarkerAlt, FaCalendarAlt } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { updateFormField } from '../redux/reducer/bookingSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
+import { isGoogleMapsLoaded } from '../utils/ScriptLoader';
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -35,20 +36,35 @@ const Home = () => {
   const fromInputRef = useRef(null);
   const toInputRef = useRef(null);
 
+  // useEffect(() => {
+  //   const initAutocomplete = () => {
+  //     if (window.google) {
+  //       const fromAutocomplete = new window.google.maps.places.Autocomplete(fromInputRef.current);
+  //       const toAutocomplete = new window.google.maps.places.Autocomplete(toInputRef.current);
+
+  //       fromAutocomplete.addListener('place_changed', () => handlePlaceSelect(fromAutocomplete, 'from'));
+  //       toAutocomplete.addListener('place_changed', () => handlePlaceSelect(toAutocomplete, 'to'));
+  //     }
+  //   };
+
+  //   initAutocomplete();
+  // }, []);
   useEffect(() => {
     const initAutocomplete = () => {
-      if (window.google) {
+      if (isGoogleMapsLoaded()) {
         const fromAutocomplete = new window.google.maps.places.Autocomplete(fromInputRef.current);
         const toAutocomplete = new window.google.maps.places.Autocomplete(toInputRef.current);
 
         fromAutocomplete.addListener('place_changed', () => handlePlaceSelect(fromAutocomplete, 'from'));
         toAutocomplete.addListener('place_changed', () => handlePlaceSelect(toAutocomplete, 'to'));
+      } else {
+        // If Google Maps isn't loaded yet, try again after a short delay
+        setTimeout(initAutocomplete, 100);
       }
     };
 
     initAutocomplete();
   }, []);
-
   
   const handlePlaceSelect = (autocomplete, field) => {
     const place = autocomplete.getPlace();
@@ -89,7 +105,7 @@ const Home = () => {
             variants={itemVariants}
           >
             <motion.h1 className='title' variants={itemVariants}>
-               VelocityRide
+               BariTravels
             </motion.h1>
             <motion.div className="trip-toggle" onClick={toggleTripType}>
               <motion.div

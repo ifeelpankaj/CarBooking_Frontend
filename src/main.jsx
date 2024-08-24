@@ -5,8 +5,9 @@ import "./StylesSheet/app.scss"
 import { ChakraProvider } from '@chakra-ui/react'
 import { Provider } from 'react-redux'
 import { store } from './redux/store.js'
+import { loadScripts } from './utils/ScriptLoader.js'
 
-
+loadScripts().then(() => {
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <ChakraProvider>
@@ -17,3 +18,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 
   </React.StrictMode>,
 )
+}).catch(error => {
+  console.error('Failed to load scripts:', error);
+  // Handle the error appropriately (e.g., show an error message to the user)
+});

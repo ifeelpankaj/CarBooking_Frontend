@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
+
 const server = import.meta.env.VITE_SERVER
 
 export const adminApi = createApi({
@@ -19,9 +20,20 @@ export const adminApi = createApi({
             query: () => 'all-users',
             providesTags: ['users'],
         }),
+        // adminBookings: builder.query({
+        //     query: () => 'all-bookings',
+        //     providesTags: ['orders', 'cabs'],
+        // }),
         adminBookings: builder.query({
-            query: () => 'all-bookings',
-            providesTags: ['orders', 'cabs'],
+            query: (params) => ({
+                url: 'all-bookings',
+                params: params,
+            }),
+            providesTags: ['orders'],
+        }),
+        bookingStats: builder.query({
+            query: () => 'booking-stats',
+            providesTags: ['orders'],
         }),
         adminDriver: builder.query({
             query: () => 'all-drivers',
@@ -51,6 +63,14 @@ export const adminApi = createApi({
             query: (Id) => `admin-driver-ById/${Id}`,
             providesTags: ['cabs', 'users', 'orders'],
         }),
+        setRateForCab: builder.mutation({
+            query: ({ id, rate }) => ({
+              url: `/setRate/${id}`,
+              method: 'POST',
+              body: { rate },
+            }),
+            invalidatesTags: ['Cab'],
+          }),
         adminVerifyDriver: builder.mutation({
             query: ({ id, flag }) => ({
                 url: `admin-verify-driver/${id}`,
@@ -64,4 +84,4 @@ export const adminApi = createApi({
 
 })
 
-export const { useAdminCabsQuery, useAdminUsersQuery, useAdminBookingsQuery, useAdminDriverQuery, useAdminAvaliableCabMutation, useAdminAssignCabMutation, useAdminDriverDetailsQuery, useAdminVerifyDriverMutation } = adminApi;
+export const { useAdminCabsQuery, useAdminUsersQuery, useAdminBookingsQuery, useAdminDriverQuery, useAdminAvaliableCabMutation, useAdminAssignCabMutation, useAdminDriverDetailsQuery, useAdminVerifyDriverMutation,useBookingStatsQuery ,useSetRateForCabMutation} = adminApi;

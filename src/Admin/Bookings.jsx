@@ -20,16 +20,15 @@ const Bookings = () => {
   useEffect(() => {
     refetchOrder();
   }, [refetchOrder]);
-
+  console.log(adminBookings)
   const columns = [
-    { key: 'registeredAt', title: 'Registered At' },
+    { key: 'id', title: 'Ref No.' },
     { key: 'pickupLocation', title: 'From' },
     { key: 'destination', title: 'To' },
     { key: 'bookingStatus', title: 'Booking Status' },
     { key: 'bookingAmount', title: 'Fair' },
     { key: 'departureDate', title: 'Departure' },
     { key: 'paymentMethod', title: 'Pay Method' },
-    // { key: 'bookedCab', title: 'Cab' },
 
     { key: 'manage', title: 'Manage' },
   ];
@@ -48,13 +47,13 @@ const Bookings = () => {
       paymentMethod: booking.paymentMethod || 'N/A',
       bookingAmount: Math.round(booking.bookingAmount) || 'N/A',
       // bookedCab: booking.bookedCab || 'N/A',
-      registeredAt: new Date(booking.createdAt).toLocaleDateString(),
+      id: booking._id || 'N/A',
       departureDate: new Date(booking.departureDate).toLocaleDateString(),
 
       manage: <button onClick={() => handleManage(booking._id)}>Manage</button>
     }));
   };
-  const filterableColumns = ['pickupLocation', 'destination', 'departureDate', 'paymentMethod', 'bookingStatus'];
+  const filterableColumns = ['pickupLocation', 'destination', 'departureDate', 'paymentMethod', 'bookingStatus','id'];
   const handleManage = (id) => {
     // console.log(`Manage cab with id: ${id}`);
     navigate(`/admin/manage-booking/${id}`)

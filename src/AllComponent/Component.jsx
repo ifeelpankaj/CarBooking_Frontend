@@ -1,9 +1,10 @@
 import React from "react";
 import { motion, AnimatePresence, color } from 'framer-motion';
 import PropTypes from 'prop-types';
-import { FaCalculator, FaCalendar, FaCar, FaCheckCircle, FaCreditCard, FaDollarSign, FaExclamationTriangle, FaFlagCheckered, FaHashtag, FaIdCard, FaList, FaMapMarker, FaTags, FaUser, FaUserFriends, FaWallet } from 'react-icons/fa';
+import { FaCalculator, FaCalendar, FaCalendarAlt, FaCar, FaCheckCircle, FaCogs, FaCreditCard, FaDollarSign, FaExclamationTriangle, FaFileInvoice, FaFlagCheckered, FaHashtag, FaIdCard, FaList, FaMapMarker, FaTags, FaUser, FaUserFriends, FaWallet } from 'react-icons/fa';
 import { MdConfirmationNumber } from 'react-icons/md';
 import { DateUtils } from "../utils/DateUtils";
+
 
 
 
@@ -87,6 +88,29 @@ export const PaymentSection = ({ order }) => (
                 <p style={order.paymentStatus !== "Paid" ? { color: "red" } : { color: "green" }}>
                     ₹ {order.paymentStatus}
                 </p>
+            </div>
+        </div>
+    </section>
+
+);
+export const SummarySection = ({ order, cab }) => (
+    <section className="booking_booking-detail__payment">
+        <h2>Booking Details</h2>
+        <div className="booking_payment-card">
+            <div className="booking_payment-card__method">
+                <i className="fas fa-credit-card"><FaFileInvoice /></i>
+                <h3>Ref No.</h3>
+                <p>{order._id}</p>
+            </div>
+            <div className="booking_payment-card__amount">
+                <i className="fas fa-dollar-sign"><FaCalendarAlt /></i>
+                <h3>Created At</h3>
+                <p style={{ color: "green" }}>{DateUtils.formatShortDate(order.createdAt)}</p>
+            </div>
+            <div className="booking_payment-card__amount">
+                <i className="fas fa-dollar-sign"><FaCogs /></i>
+                <h3>Seats</h3>
+                <p style={{ color: "red" }}>₹ {(cab.capacity)}</p>
             </div>
         </div>
     </section>
@@ -191,20 +215,38 @@ export const Carousel = ({ images }) => {
     );
 };
 
-export const DriverInfo = ({ driver,CabId }) => (
-    <div className="driver_info">
-        <p>Since: {DateUtils.formatShortDate(driver.createdAt, false)}</p>
-        <p>Name: {driver.username}</p>
-        <p>Cab ID: {CabId}</p>
+export const DriverInfo = ({ driver, CabId, cab }) => {
+    const cabInfo = !!cab; // This will be true if cab object is provided, false otherwise
 
-        <p>Email: {driver.email}</p>
-        <p>Phone No: {driver.phoneNumber}</p>
-        <div className="driver_info_document-status">
-            <span>Document Submitted: {driver.isDocumentSubmited ? "Yes" : "No"}</span>
-            <span>Have Car: {driver.haveCab ? "Yes" : "No"}</span>
+    return (
+        <div className="driver_info">
+            <p>Since: {DateUtils.formatShortDate(driver.createdAt, false)}</p>
+            <p>Name: {driver.username}</p>
+            <p>Cab ID: {CabId}</p>
+            <p>Email: {driver.email}</p>
+            <p>Phone No: {driver.phoneNumber}</p>
+            {cabInfo ? (
+                <div className="driver_info_document-status">
+                    <span> <p>Verified </p> <p style={{
+                        backgroundColor: driver.isDocumentSubmited ? 'green' : 'red',
+                    }}>{driver.isDocumentSubmited ? "Yes" : "No"}</p></span>
+                    <span> <p>Is Ready </p> <p style={{
+                        backgroundColor: cab.isReady ? 'green' : 'red',
+                    }}>{cab.isReady ? "Yes" : "No"}</p></span>
+                </div>
+            ) : (
+                <div className="driver_info_document-status">
+                    <span><p>Verified </p><p style={{
+                        backgroundColor: driver.isDocumentSubmited ? 'green' : 'red',
+                    }}>{driver.isDocumentSubmited ? "Yes" : "No"}</p></span>
+                    <span><p>CarOwned </p> <p style={{
+                        backgroundColor: driver.haveCab ? 'green' : 'red',
+                    }}>{driver.haveCab ? "Yes" : "No"}</p></span>
+                </div>
+            )}
         </div>
-    </div>
-);
+    );
+};
 
 export const CarDetails = ({ cab }) => (
     <section className="admin_driver-detail__ride">

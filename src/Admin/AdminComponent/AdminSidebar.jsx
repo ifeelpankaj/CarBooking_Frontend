@@ -56,7 +56,7 @@ const AdminSidebar = () => {
       >
         <h2>Logo.</h2>
         <DivOne location={location} />
-        {/* <DivTwo location={location} /> */}
+        <DivTwo location={location} />
         {/* <DivThree location={location} /> */}
 
         {phoneActive && (
@@ -112,8 +112,8 @@ const DivTwo = ({ location }) => (
     <h5>Charts</h5>
     <ul>
       <Li
-        url="/admin/chart/bar"
-        text="Bar"
+        url="/admin/cabs/Rate"
+        text="Set Rate"
         Icon={FaChartBar}
         location={location}
       />

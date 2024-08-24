@@ -5,22 +5,23 @@ import { AiOutlineMail } from "react-icons/ai";
 import toast from 'react-hot-toast';
 import NotFound from '../components/NotFound';
 import { Button } from '@chakra-ui/react';
+import Loader from '../components/Loader';
 
 const Profile = () => {
     const { data: me, isLoading } = useMeQuery();
-    if( !me){
-        return <NotFound/>
+    if(!me){
+        console.log("true")
     }
-
     const [update, { isLoading: updateLoading }] = useUpdateMutation();
     const [isEditing, setIsEditing] = useState(false);
     const [editedProfile, setEditedProfile] = useState({});
     const [newAvatar, setNewAvatar] = useState(null);
     const fileInputRef = useRef(null);
-    if (isLoading) return <div className="loading">Loading...</div>;
+    
+    if (isLoading) return <Loader/>;
+    if (!me) return <NotFound />;
 
-    const profile = me?.user;
-
+    const profile = me.user;
     const initialLetter = profile.name.charAt(0).toUpperCase();
 
     const handleEdit = () => {

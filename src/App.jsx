@@ -9,10 +9,6 @@ import { Toaster } from 'react-hot-toast';
 import ProtectedRoute from './components/ProtectedRoute'; 
 
 
-
-
-
-
 // Lazy loading components for sending data in chunks 
 const Home = lazy(() => import('./pages/Home'));
 const AuthForm = lazy(() => import('./pages/AuthForm'));
@@ -40,6 +36,9 @@ const Bookings = lazy(() => import('./Admin/Bookings'));
 const Drivers = lazy(() => import('./Admin/Drivers'));
 const ManageBookings = lazy(() => import('./Admin/ManageBookings'));
 const ManageDrivers = lazy(() => import('./Admin/ManageDrivers'));
+const ManageCustomer = lazy(() => import('./Admin/ManageCustomer'));
+const ManageCabs = lazy(() => import('./Admin/ManageCabs'));
+
 
 
 
@@ -64,6 +63,10 @@ const App = () => {
   
   const { isLoading } = useUser();
   const { user } = useSelector((state) => state.auth);
+
+  // if(!user){
+  //   return <Loader/>
+  // }
 
   if (isLoading) {
     return <Loader />;
@@ -96,6 +99,8 @@ const App = () => {
           <Route path="/admin/cabs" element={<ProtectedRoute roles={["Admin"]}><OurCabs /></ProtectedRoute>} />
           <Route path="/admin/manage-booking/:id" element={<ProtectedRoute roles={["Admin"]}><ManageBookings /></ProtectedRoute>} />
           <Route path="/admin/manage-driver/:id" element={<ProtectedRoute roles={["Admin"]}><ManageDrivers /></ProtectedRoute>} />
+          <Route path="/admin/manage-customer/:id" element={<ProtectedRoute roles={["Admin"]}><ManageCustomer /></ProtectedRoute>} />
+          <Route path="/admin/manage-cabs/:id" element={<ProtectedRoute roles={["Admin"]}><ManageCabs /></ProtectedRoute>} />
 
 
 

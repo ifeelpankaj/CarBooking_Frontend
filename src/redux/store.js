@@ -6,7 +6,7 @@ import { cabApi } from "./api/cabApi";
 import { orderApi } from "./api/orderApi";
 import { driverApi } from "./api/driverApi";
 import { adminApi } from "./api/adminApi";
-import { appReducer } from "./reducer/appSlice";
+
 
 
 
@@ -14,7 +14,6 @@ export const server = import.meta.env.VITE_SERVER;
 
 export const store = configureStore({
   reducer: {
-    [appReducer.name]:appReducer.reducer,
     [userAPI.reducerPath]: userAPI.reducer,
     [userReducer.name]:userReducer.reducer,
 

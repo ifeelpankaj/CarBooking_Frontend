@@ -13,19 +13,21 @@ const Drivers = () => {
 
   const columns = [
     { key: 'username', title: 'Name' },
+    { key: 'id', title:'Ref No.'},
     { key: 'phoneNumber', title: 'Mobile No' },
     { key: 'isDocumentSubmited', title: 'Document' },
-    { key: 'haveCab', title: 'Car' },
-    { key: 'manage', title: 'Manage' },
+    { key: 'haveCab', title: 'Car'},
+    { key: 'manage', title: 'Manage'}
   ];
 
-  const filterableColumns = ['username', 'phoneNumber', 'haveCab','isDocumentSubmited'];
+  const filterableColumns = ['username', 'phoneNumber', 'haveCab','isDocumentSubmited','id'];
   
   const formatData = (data) => {
     if (!data || !data.data) return [];
 
     return data.data.map(driver => ({
       username: driver.username || 'N/A',
+      id:driver._id,
       phoneNumber: driver.phoneNumber || 'N/A',
       isDocumentSubmited: driver.isDocumentSubmited ? 'Yes' : 'No',
       haveCab: driver.haveCab ? 'Yes' : 'No',

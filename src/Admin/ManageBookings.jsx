@@ -8,7 +8,7 @@ import { useAdminAvaliableCabMutation, useAdminAssignCabMutation, adminApi, useA
 import CustomTable from './AdminComponent/TableHOC';
 import toast from 'react-hot-toast'
 import { useDispatch } from 'react-redux';
-import { DriverCard, JourneySection, PassengersSection, PaymentSection } from '../AllComponent/Component';
+import { DriverCard, JourneySection, PassengersSection, PaymentSection, SummarySection } from '../AllComponent/Component';
 
 
 
@@ -96,6 +96,8 @@ const ManageBookings = () => {
                     <JourneySection order={order} />
                     <PassengersSection passengers={order.passengers} />
                     <PaymentSection order={order} />
+                    <SummarySection order={order} cab={cabData.cab}/>
+                    
                 </div>
                 
                 {order.driverId ? (

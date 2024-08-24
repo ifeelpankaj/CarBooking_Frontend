@@ -6,7 +6,8 @@ import { useLazyLogoutQuery } from '../redux/api/userApi';
 import { userNotExist } from '../redux/reducer/userReducer';
 import { resetForm } from '../redux/reducer/bookingSlice';
 import toast from 'react-hot-toast';
-import userImg from "../assets/userpic.png"
+import userImg from "../assets/userpic.png";
+import Logo from '../assets/logo.png';
 const Header = () => {
     const { user } = useSelector((state) => state.auth);
     const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
@@ -21,6 +22,9 @@ const Header = () => {
             const result = await logout();
             if (result.data.success === true) {
                 dispatch(userNotExist());
+                setTimeout(() => {
+                    window.location.reload();
+                },0);
                 toast.success(result.data.message);
             } else {
                 toast.error('Unable to Logout');
@@ -72,8 +76,8 @@ const Header = () => {
 
                 {!isMobileView && (
                     <Link to="/" className="header__logo">
-                        <FaCar className="header__logo-icon" />
-                        <span className="header__logo-text">VelocityRide</span>
+                        <img src={Logo} className="header__logo-icon" />
+                        <span className="header__logo-text">BariTravels</span>
                     </Link>
                 )}
 

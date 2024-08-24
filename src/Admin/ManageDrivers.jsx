@@ -15,7 +15,7 @@ const ManageDrivers = () => {
     const { data: driverDetail, isLoading } = useAdminDriverDetailsQuery(id);
     const [adminVerifyDriver, { isLoading: verifyLoading, error: verifyError }] = useAdminVerifyDriverMutation();
     const [showDocument, setShowDocument] = useState(null);
-    const [isVerified, setIsVerified] = useState(driverDetail?.driver?.isVerifiedDriver);
+    const [isVerified, setIsVerified] = useState(driverDetail?.driver?.isDocumentSubmited);
 
     if (isLoading || !driverDetail) return <Loader />;
 
@@ -27,7 +27,7 @@ const ManageDrivers = () => {
     const handleVerify = async () => {
         try {
             const res = await adminVerifyDriver({ id, flag: !isVerified }).unwrap();
-            console.log(res)
+    
             if (res.success) {
                 toast.success(res.message)
             }

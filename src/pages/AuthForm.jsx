@@ -4,7 +4,7 @@ import { useRegisterMutation, useVerifyMutation, useLoginMutation } from '../red
 import { useDispatch } from 'react-redux';
 import toast from 'react-hot-toast';
 import { Button, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, VStack, useDisclosure } from '@chakra-ui/react';
-import { authFailure, authRequest, authSuccess, userExist } from '../redux/reducer/userReducer';
+import { authFailure, authRequest, authSuccess, userExist, userNotExist } from '../redux/reducer/userReducer';
 import { motion, AnimatePresence } from 'framer-motion';
 const AuthForm = () => {
     const dispatch = useDispatch();
@@ -26,20 +26,69 @@ const AuthForm = () => {
     const isLoading = registerLoading || loginLoading;
 
     const buttonText = isLoading ? (isLogin ? "SIGN IN..." : "SIGN UP...") : (isLogin ? "SIGN IN" : "SIGN UP");
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
+    //     dispatch(authRequest());
+
+    //     if (isLogin) {
+    //         try {
+    //             const res = await login({ email, password }).unwrap();
+    //             console.log(res)
+    //             if (res.success === true) {
+    //                 dispatch(authSuccess({ user: res.user }));
+    //                 toast.success(res.message);
+    //                 navigate('/');
+    //             } else {
+    //                 toast.error(res.message || 'Unexpected response from server');
+    //                 dispatch(authFailure(res.message || 'Unexpected response from server'));
+    //             }
+    //         } catch (err) {
+    //             const errorMessage = err.data?.message || err.message || 'An error occurred during login';
+    //             toast.error(errorMessage);
+    //             dispatch(authFailure(errorMessage));
+    //         }
+    //     } else {
+    //         try {
+    //             const newUser = { username, email, password, role, phoneNumber };
+    //             const result = await register(newUser).unwrap();
+    //             if (result.success === true) {
+    //                 dispatch(authSuccess({ user: result.user, token: result.token }));
+    //                 toast.success(result.message);
+    //                 onOpen();
+    //             } else {
+    //                 dispatch(authFailure(result.message || 'Unexpected response from server'));
+    //                 toast.error(result.message || 'Unexpected response from server');
+    //             }
+    //         } catch (err) {
+    //             console.error("Registration error:", err);
+    //             let errorMessage = 'Registration failed';
+    //             if (err.data && err.data.message) {
+    //                 errorMessage = err.data.message;
+    //             } else if (err.message) {
+    //                 errorMessage = err.message;
+    //             }
+    //             dispatch(authFailure(errorMessage));
+    //             toast.error(errorMessage);
+    //         }
+    //     }
+    // };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         dispatch(authRequest());
-
+        
+    
         if (isLogin) {
             try {
+    
                 const res = await login({ email, password }).unwrap();
-                if (res.success) {
-                    dispatch(authSuccess({ user: res.user, token: res.token }));
+                if (res.success === true) {
+                    dispatch(userExist({ user: res.user }));
                     toast.success(res.message);
-                    dispatch(userExist(res));
                     navigate('/');
                 } else {
                     toast.error(res.message || 'Unexpected response from server');
+                   
                     dispatch(authFailure(res.message || 'Unexpected response from server'));
                 }
             } catch (err) {
@@ -52,7 +101,7 @@ const AuthForm = () => {
                 const newUser = { username, email, password, role, phoneNumber };
                 const result = await register(newUser).unwrap();
                 if (result.success === true) {
-                    dispatch(authSuccess({ user: result.user, token: result.token }));
+                    dispatch(authSuccess({ user: result.user}));
                     toast.success(result.message);
                     onOpen();
                 } else {
@@ -72,11 +121,11 @@ const AuthForm = () => {
             }
         }
     };
-
+    
     const handleOtpSubmit = async () => {
         try {
             const result = await verify({ email, otp }).unwrap();
-            dispatch(authSuccess({ user: result.user, token: result.token }));
+            dispatch(authSuccess({ user: result.user}));
             if (result.success === true) {
                 toast.success(result.message);
                 onClose();
